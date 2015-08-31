@@ -1,0 +1,22 @@
+{
+  "name": "Splaturn",
+  "version": "1.0.0",
+  "description": "文化祭の催し物",
+  "main": "splaturn.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Inflatier/Splaturn.git"
+  },
+  "author": "YSFH CSC",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Inflatier/Splaturn/issues"
+  },
+  "homepage": "https://github.com/Inflatier/Splaturn",
+  "dependencies": {
+    "express": "^4.13.3"
+  }
+}
