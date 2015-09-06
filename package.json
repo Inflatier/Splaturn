@@ -2,10 +2,9 @@
   "name": "Splaturn",
   "version": "1.0.0",
   "description": "文化祭の催し物",
-  "main": "splaturn.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./splaturn.js"
   },
   "repository": {
     "type": "git",
