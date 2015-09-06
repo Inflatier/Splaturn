@@ -2,6 +2,8 @@ var express = require('express');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 
+var port = process.env.PORT || 1337;
+
 var app = express();
 
 app.use(cookieParser());
@@ -16,4 +18,4 @@ app.get('/', function (req, res) {
 	res.end('Hello World');
 });
 
-app.listen(14514);
+app.listen(port);
