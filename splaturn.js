@@ -1,21 +1,35 @@
 var express = require('express');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 
 var Colors = require('./modules/colors');
+var Player = require('./modules/player');
 
 var app = express();
 
-app.use(cookieParser);
+app.use(cookieParser());
 app.use(session({secret: 'YSFH情報工学部'}));
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static(__dirname + '/public'));
 
-var rooms = [];
-var items = [];
-var players = [];
+app.locals.rooms = [];
+app.locals.items = [];
+app.locals.players = [];
+
+app.post('/configure', function gameConfiguration(req, res) {
+	
+});
 
 app.post('/entry', function entryUser(req, res) {
-	console.log(req.body.color);
-	res.end(req.body.color);
+	var name = req.body.playername;
+	var color = req.body.color;
+	
+	console.log(req.body);
+	res.end(name + '\n' + color);
+	
+	var player = new Player(name, color);
+	res.app.locals.players.push(player);
 });
 
 app.get('/rooms', function provideRooms(req, res) {
@@ -24,7 +38,8 @@ app.get('/rooms', function provideRooms(req, res) {
 	 res.end();
 });
 
-app.use(express.static(__dirname + '/public'));
+app.post('/start', function gameStart(req, res) {
+});
 
 
 app.listen(14514);
