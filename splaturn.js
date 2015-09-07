@@ -1,13 +1,13 @@
 var express = require('express');
 var session = require('express-session');
-var parser = require('cookie-parser');
+var cookieParser = require('cookie-parser');
 
 var Colors = require('./modules/colors');
 
 var app = express();
 
-app.use(parser);
-app.use(session);
+app.use(cookieParser);
+app.use(session({secret: 'YSFH情報工学部'}));
 
 var rooms = [];
 var items = [];
