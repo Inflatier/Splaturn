@@ -1,13 +1,17 @@
+ /**
+  * item.js
+  * 名前と動作を設定されたアイテムを生成する
+  * 
+  * 引数
+  *   name (string) アイテムの名前。
+  *   action (function) アイテムの動作。
+  */
+ 
  var Items = require('items');
  
- function Item(qrId, funcId){
-	 this.qrId = qrId;
-	 this.funcId;
-	 function use(userId){
-		 switch(this.funcId){
-			 case 0:	//
-		 }
-	 }
+ function Item(name, action) {
+	 this.name = name;
+	 this.use = action;
  }
  
  module.exports = Item;

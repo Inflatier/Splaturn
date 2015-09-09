@@ -1,5 +1,5 @@
 /**
- * Room
+ * room.js
  * 部屋のクラス
  * 
  * 引数
@@ -19,9 +19,36 @@
  function Room(id, name, color) {
 	 this.id = id;
 	 this.name = name;
-	 this.lockExpiration = 0;
+	 this.lockExpire = 0;
 	 this.color = color;
 	 this.isTrapped = false;
  }
+ Room.prototype.isLocked = function () {
+	if (this.lockExpire > 0)
+		return true;
+	else
+		return false; 
+ };
+ Room.prototype.lock = function (expire) {
+	 if (!this.isLocked) {
+		 this.lockExpire = expire;
+	 } else {
+		 
+	 }
+ };
+ Room.prototype.turnColor = function (color) {
+	 if (!this.isLocked) {
+		 this.color = color;
+	 } else {
+		 
+	 }
+ };
+ Room.prototype.setTrap = function () {
+	 if (!this.isLocked) {
+		 this.isTrapped = true;
+	 } else {
+		 
+	 }
+ };
  
  module.exports = Room;

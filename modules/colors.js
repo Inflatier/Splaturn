@@ -1,4 +1,5 @@
 module.exports = {
-	'red': 1,
-	'blue': 2
+	'none': 1,
+	'red': 2,
+	'blue': 3
 };
