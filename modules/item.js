@@ -7,8 +7,6 @@
   *   action (function) アイテムの動作。
   */
  
- var Items = require('items');
- 
  function Item(name, action) {
 	 this.name = name;
 	 this.use = action;

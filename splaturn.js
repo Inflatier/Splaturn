@@ -28,9 +28,6 @@ app.use(session({
 // POSTで受け取ったデータにreq.body.XXXでアクセスできるようになるモジュール
 app.use(bodyParser.urlencoded({extended: true}));
 
-// 静的なファイルを提供するモジュール
-app.use(express.static(__dirname + '/public'));
-
 
 
 
@@ -68,13 +65,16 @@ app.post('/paint', endpoints.paint);
 
 app.get('/', function index(req, res) {
 	if (req.session.entried == true) res.redirect('/game');
-	else res.redirect('/entry');
+	//else res.redirect('/entry');
+	else res.sendFile(__dirname + '/public/index.html');
 });
 
 app.get('/game', function game(req, res) {
 	res.send(JSON.stringify(req.session));
 });
 
+// 静的なファイルを提供するモジュール
+app.use(express.static(__dirname + '/public'));
 
 
 // 接続を受け付ける

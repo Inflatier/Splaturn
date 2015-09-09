@@ -32,7 +32,7 @@ var util = {};
 
 function Endpoints(instance) {
 	app = instance;
-	util = require('./utilities')(app);
+	util = require('../modules/utilities')(app);
 	var endpoints = {
 		'configure': configure,
 		'entry': entry,
@@ -60,6 +60,8 @@ function entry(req, res) {
 	var player = new Player(name, color);
 	
 	res.app.locals.players.push(player);
+	req.session.playername = name;
+	req.session.color = color;
 	// ユーザーをエントリー済みに
 	req.session.entried = true;
 	
