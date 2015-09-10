@@ -85,8 +85,7 @@ function paint(req, res) {
 	var room = util.getRoom(roomid);
 	var color = req.session.color;
 	
-	// 染色
-	room.color = color;
+	var result = room.turnColor(color);
 }
 
 function takeItem(req, res) {

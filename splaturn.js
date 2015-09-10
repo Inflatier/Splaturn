@@ -65,12 +65,15 @@ app.post('/paint', endpoints.paint);
 
 app.get('/', function index(req, res) {
 	if (req.session.entried == true) res.redirect('/game');
-	//else res.redirect('/entry');
-	else res.sendFile(__dirname + '/public/index.html');
+	else res.render('index');
 });
 
 app.get('/game', function game(req, res) {
 	res.send(JSON.stringify(req.session));
+});
+
+app.get('/paint', function paint(req, res) {
+	res.render('paint');
 });
 
 // 静的なファイルを提供するモジュール
