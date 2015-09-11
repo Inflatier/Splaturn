@@ -1,6 +1,6 @@
-function Result(code, description) {
+function Result(code, message) {
 	this.code = code;
-	this.description = description;
+	this.message = message;
 }
 	
 var SUCCESS = 1;
