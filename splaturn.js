@@ -51,16 +51,21 @@ app.locals.config = require('./config.json');
 
 
 
+// ゲームの参加・退出用エンドポイント
+var entry = require('./routes/entry');
 
-// 設定画面を提供するルーター
+// ゲームのAPI
 var endpoints = require('./routes/endpoints')(app);
 
 // APIのエンドポイントたち
-app.get('/configure', endpoints.configure);
-app.post('/entry', endpoints.entry);
-app.get('/destroy', endpoints.destroy);
+app.post('/join', entry.join);
+app.get('/quit', entry.quit);
+
 app.get('/rooms', endpoints.rooms);
 app.post('/paint', endpoints.paint);
+app.post('/locker', endpoints.locker);
+app.post('/nullPeinter', endpoints.nullPeinter);
+app.post('/trap', endpoints.trap);
 
 
 app.get('/', function index(req, res) {

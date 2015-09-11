@@ -10,9 +10,13 @@
 
 var Item = require('./item');
 var Colors = require('./colors');
+var Result = require('./result')
 var config = require('../config.json');
 var app;
 var util;
+
+var SUCCESS = 1;
+var FAILURE = -1;
 
 function Items(instance) {
 	app = instance;
@@ -24,7 +28,12 @@ function Items(instance) {
 			new Item('locker',
 				function (target) {
 					var room = util.getRoom(target);
-					var result = room.lock(config.items.locker.expire);
+					if (room.isLocked()) {
+						return new Result(FAILURE, room.name + 'にはロックを掛けることができない!この部屋には既にロックがかかっているようだ。');
+					}
+					
+					room.lockExpire = config.items.locker.expire;
+					return new Result(SUCCESS, room.name + 'に' + parseInt(room.lockExpire / 1000) + '秒間のロックを掛けた。');
 				}
 			),
 		
@@ -33,16 +42,26 @@ function Items(instance) {
 			new Item('nullPeinter',
 				function (target) {
 					var room = util.getRoom(target);
-					var result = room.turn(Colors.none);
+					if (room.isLocked()) {
+						return new Result(FAILURE, room.name + 'の色を消すことができない!この部屋にはロックがかかっているようだ。'); 
+					}
+					
+					room.color = Colors.none;
+					return new Result(SUCCESS, room.name + 'の色を消した!');
 				}
 			),
 		
 		// jammer 任意の部屋にトラップを仕掛ける
-		'jammer':
-			new Item('jammer',
+		'trap':
+			new Item('trap',
 				function (target) {
 					var room = util.getRoom(target);
-					var result = room.setTrap();
+					if (room.isLocked()) {
+						return new Result(FAILURE, room.name + 'にトラップを仕掛けることができない!この部屋はロックがかかっているようだ。');
+					}
+					
+					room.isTrapped = true;
+					return new Result(SUCCESS, room.name + 'にトラップを仕掛けた!');
 				}
 			)
 			

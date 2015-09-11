@@ -16,6 +16,11 @@
  * 
  */
  
+ var Result = require('./result');
+ 
+ var SUCCESS = 1;
+ var FAILURE = -1;
+ 
  function Room(id, name, color) {
 	 this.id = id;
 	 this.name = name;
@@ -29,26 +34,13 @@
 	else
 		return false; 
  };
- Room.prototype.lock = function (expire) {
-	 if (!this.isLocked) {
-		 this.lockExpire = expire;
-	 } else {
-		 
-	 }
- };
  Room.prototype.turnColor = function (color) {
-	 if (!this.isLocked) {
-		 this.color = color;
-	 } else {
-		 
+	 if (this.isLocked()) {
+		 return new Result(FAILURE, this.name + 'の色を塗り替えることができない!この部屋にはロックがかかっているようだ。'); 
 	 }
- };
- Room.prototype.setTrap = function () {
-	 if (!this.isLocked) {
-		 this.isTrapped = true;
-	 } else {
-		 
-	 }
+	 
+	 this.color = color;
+	 return new Result(SUCCESS, this.name + 'の色を塗り替えた!');
  };
  
  module.exports = Room;
