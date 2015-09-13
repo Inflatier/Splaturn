@@ -90,7 +90,9 @@ app.get('/paint', function paint(req, res) {
 
 
 app.use('/qr', proxy('api.qrserver.com', {
-  forwardPath: function(req, res) { return '/v1/read-qr-code/'; }
+  forwardPath: function(req, res) {
+	  return '/v1/read-qr-code/';
+  }
 }));
 
 // 静的なファイルを提供するモジュール

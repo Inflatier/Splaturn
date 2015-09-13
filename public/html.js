@@ -155,44 +155,50 @@ var QR = body.append("div").on("click", function () {
 				onsubmit: "return false;",
 			});
 			form.append("input").attr({
-                    type: "file",
-                    accept: "image/*;capture=camera",
-                    id:"file",
-                }).style({
-                    display:"block",
-                    position: "absolute",
-					width: "80%",
-					//height: "20%",
-                    "margin-top": "20%",
-                    "margin-left": "10%",
-                    "font-size": "15",
-                    "text-align": "center",
-                    width: "100%",
-					// background: "rgb(255, 238, 80)",
-					// "border-radius": "20%",
-                });
-                form.append("input").attr({
-                    id: "send",
-                    type: "submit",
-                }).style({
-                    display: "block",
-					width: "30%",
-					height: "15%",
-                    position: "absolute",
-                    "margin-top": "30%",
-                    "margin-left": "35%",
-					background: "rgb(255, 238, 80)",
-					"border-radius": "20%",
-                });
+				type: "hidden",
+				name: "MAX_FILE_SIZE",
+				value: "1048576"
+			});
+			form.append("input").attr({
+				type: "file",
+				name: "file",
+				accept: "image/*;capture=camera",
+				id:"file",
+			}).style({
+				display:"block",
+				position: "absolute",
+				width: "80%",
+				//height: "20%",
+				"margin-top": "20%",
+				"margin-left": "10%",
+				"font-size": "15",
+				"text-align": "center",
+				width: "100%",
+				// background: "rgb(255, 238, 80)",
+				// "border-radius": "20%",
+			});
+			form.append("input").attr({
+				id: "send",
+				type: "submit",
+			}).style({
+				display: "block",
+				width: "30%",
+				height: "15%",
+				position: "absolute",
+				"margin-top": "30%",
+				"margin-left": "35%",
+				background: "rgb(255, 238, 80)",
+				"border-radius": "20%",
+			});
 			
 
 			$(function () {
 				$('#foo').submit(function () {
 					console.log("ok");
-					var fd = new FormData($('#foo').get(0));
+					var fd = new FormData($('#foo').get()[0]);
 					$.ajax({
-						url: "http://api.qrserver.com/v1/read-qr-code/",
-						type: "POST",
+						url: "qr",
+						method: "POST",
 						data: fd,
 						processData: false,
 						contentType: false,
