@@ -1,4 +1,4 @@
-var request = window.superagent;
+
 
 /*
 GETのとき
