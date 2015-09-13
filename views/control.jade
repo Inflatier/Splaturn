@@ -1,0 +1,11 @@
+html
+	head
+		meta(charset="utf-8")
+		title 迫真コントローラー
+	body
+		form(action="/control/start", method="get")
+			input(type="submit", value="ゲームスタート")
+		form(action="/control/stop", method="get")
+			input(type="submit", value="ゲーム終了")
+		form(action="/control/logout", method="post")
+			input(type="submit", value="ログアウト")
