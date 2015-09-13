@@ -25,6 +25,14 @@ message: 実行結果に関するメッセージ
     }
 色はここから指定してくださいね。
 
+### State列挙体
+    {
+        "wating_entry": 1,
+        "game_started": 2,
+        "game_finished": 3
+    }
+ゲームの状態がわかるゾ
+
 #### Roomオブジェクト
     {  
         "id": 810,
@@ -40,6 +48,9 @@ color: (Color) その部屋の色。Color列挙体の色を指定。
 isTrapped: (boolean) その部屋にトラップが仕掛けられている(true)か否(false)か。  
 
 ## クライアント用API
+
+#### GET /state
+ゲームの状態(エントリー中・ゲーム中・ゲーム終了済み)をState列挙体の数値で返す。クライアント側で if (State.wating_entry)みたいに使うことを想定してます。  
 
 #### GET /left
 残り時間をミリ秒の整数で返す。
@@ -63,6 +74,20 @@ roomid ロックをかける部屋のID
 roomid 色を消す部屋のID
 
 #### POST /trap
-任意の部屋にトラップを仕掛ける。戻り値はResultオブジェクト。
+任意の部屋にトラップを仕掛ける。戻り値はResultオブジェクト。  
 パラメータ:  
-roomid トラップを仕掛ける部屋のID
+roomid トラップを仕掛ける部屋のID  
+  
+## マスタークライアント用エンドポイント/API
+
+#### GET /control/login
+ログイン画面。パスワードはmodules/master.js内にあります。
+
+#### GET /control/start
+ゲームを開始する。
+
+#### GET /control/stop
+ゲームを終了する。
+
+#### POST /control/logout
+マスタークライアントからログアウト。

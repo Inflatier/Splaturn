@@ -37,6 +37,8 @@ function Endpoints(instance) {
 	app = instance;
 	util = require('../modules/utilities')(app);
 	var endpoints = {
+		'state': state,
+		'left': left,
 		'rooms': rooms,
 		'paint': paint,
 		'locker': locker,
@@ -44,6 +46,18 @@ function Endpoints(instance) {
 		'trap': trap
 	};
 	return endpoints;
+}
+
+function state(req, res) {
+	res.writeHead(200, {'Content-Type': 'application/json;charset=utf-8'});
+	res.write(res.app.locals.state.toString());
+	res.end();
+}
+
+function left(req, res) {
+	res.writeHead(200, {'Content-Type': 'application/json;charset=utf-8'});
+	res.write(res.app.locals.left.toString());
+	res.end();
 }
 
 function rooms(req, res) {

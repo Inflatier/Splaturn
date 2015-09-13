@@ -35,8 +35,24 @@ app.use(bodyParser.urlencoded({extended: true}));
 // Colors列挙体
 var Colors = require('./modules/colors');
 
+// ゲームのステータス(エントリー待ち・ゲーム中・ゲーム終了)
+var GameStatus = require('./modules/gamestatus');
+
+
+// ゲームコンフィグ
+app.locals.config = require('./config.json');
+
+// ゲームが開始した時間
+app.locals.started = null;
+
 // ゲームの残り時間
-app.locals.left = 0;
+app.locals.left = app.locals.config.left;
+
+// ゲームの現在の状態
+app.locals.state = GameStatus.waiting_entry;
+
+// ゲームのタイマーのID
+app.locals.timerId = null;
 
 // 全部屋の配列
 app.locals.rooms = require('./modules/rooms');
@@ -47,9 +63,6 @@ app.locals.items = require('./modules/items')(app);
 // プレイヤーの配列
 app.locals.players = [];
 
-// ゲームコンフィグ
-app.locals.config = require('./config.json');
-
 
 
 // ゲームの参加・退出用エンドポイント
@@ -57,6 +70,9 @@ var entry = require('./routes/entry');
 
 // ゲームのAPI
 var endpoints = require('./routes/endpoints')(app);
+
+// 管理用API
+var master = require('./routes/master');
 
 // APIのエンドポイントたち
 app.get('/entry', function (req, res) {
@@ -68,6 +84,8 @@ app.get('/game', function (req, res) {
 app.post('/join', entry.join);
 app.get('/quit', entry.quit);
 
+app.get('/state', endpoints.state);
+app.get('/left', endpoints.left);
 app.get('/rooms', endpoints.rooms);
 app.post('/paint', endpoints.paint);
 app.post('/locker', endpoints.locker);
@@ -80,20 +98,13 @@ app.get('/', function index(req, res) {
 	else res.redirect('/entry');
 });
 
-app.get('/game', function game(req, res) {
-	res.send(JSON.stringify(req.session));
-});
-
-app.get('/paint', function paint(req, res) {
-	res.render('paint');
-});
-
-
 app.use('/qr', proxy('api.qrserver.com', {
   forwardPath: function(req, res) {
 	  return '/v1/read-qr-code/';
   }
 }));
+
+app.use('/control', master);
 
 // 静的なファイルを提供するモジュール
 app.use(express.static(__dirname + '/public'));
