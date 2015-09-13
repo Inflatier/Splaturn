@@ -17,7 +17,7 @@
 code: APIの実行結果を表す整数。成功の場合は正の整数。失敗の場合は負の整数。  
 message: 実行結果に関するメッセージ
 
-#### Color列挙体
+#### Colors列挙体
     {
         "none": 1,
 	    "red": 2,
@@ -25,7 +25,7 @@ message: 実行結果に関するメッセージ
     }
 色はここから指定してくださいね。
 
-### State列挙体
+### GameStatus列挙体
     {
         "wating_entry": 1,
         "game_started": 2,
@@ -50,7 +50,7 @@ isTrapped: (boolean) その部屋にトラップが仕掛けられている(true
 ## クライアント用API
 
 #### GET /state
-ゲームの状態(エントリー中・ゲーム中・ゲーム終了済み)をState列挙体の数値で返す。クライアント側で if (State.wating_entry)みたいに使うことを想定してます。  
+ゲームの状態(エントリー中・ゲーム中・ゲーム終了済み)をGameStatus列挙体の数値で返す。クライアント側で if (State.wating_entry)みたいに使うことを想定してます。  
 
 #### GET /left
 残り時間をミリ秒の整数で返す。

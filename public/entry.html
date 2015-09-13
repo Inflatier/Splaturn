@@ -1,6 +1,13 @@
-<form enctype="multipart/form-data" action="/qr" method="POST">
-	<input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
-	Choose QR code image to read/scan:
-	<input name="file" type="file" />
-	<input type="submit" value="Read QR code" />
-</form>
+<html>
+	<head>
+		<title>エントリーのテスト</title>
+	</head>
+	<body>
+		<form method="post" action="/join">
+			<input type="text" name="playername" placeholder="名前" />
+			<input type="radio" name="color" value="2" checked>赤
+			<input type="radio" name="color" value="2">青
+			<input type="submit"  value="エントリー" />
+		</form>
+	</body>
+</html>
