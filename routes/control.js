@@ -1,5 +1,5 @@
 /**
- * master.js
+ * control.js
  * ゲームの開始・終了の管理と途中経過の監視用API
  * 
  * 
@@ -51,11 +51,26 @@
 	 
 	 res.app.locals.started = new Date().getTime();
 	 res.app.locals.timerId = setInterval(function gameTimer() {
-		 res.app.locals.left = res.app.locals.config.left - (new Date().getTime() - res.app.locals.started);
+		 var left = res.app.locals.config.left - (new Date().getTime() - res.app.locals.started);
+		 if (left > 0) {
+			 res.app.locals.left = left;
+		 } else {
+			 stop(res);
+		 }
 		 console.log(res.app.locals.left);
 	 }, 16);
 	 res.app.locals.state = GameStatus.game_started;
 	 res.end('THE GAME HAS STARTED.');
+ }
+ 
+ function stop(res) {
+	 if (res.app.locals.state != GameStatus.game_started) {
+		 return;
+	 }
+	 
+	clearInterval(res.app.locals.timerId);
+	res.app.locals.left = 0;
+	res.app.locals.state = GameStatus.game_finished;
  }
  
  function stopGame(req, res) {
@@ -64,9 +79,7 @@
 		 return;
 	 }
 	
-	clearInterval(res.app.locals.timerId);
-	res.app.locals.left = 0;
-	res.app.locals.state = GameStatus.game_finished;
+	stop(res);
 	res.end('THE GAME HAS STOPPED.');
  }
  
