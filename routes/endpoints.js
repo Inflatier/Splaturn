@@ -37,6 +37,8 @@ function Endpoints(instance) {
 	app = instance;
 	util = require('../modules/utilities')(app);
 	var endpoints = {
+		'myitems': myitems,
+		'getitem': getItem,
 		'myid': myid,
 		'notifications': notifications,
 		'myname': myname,
@@ -66,6 +68,25 @@ function notifications(req, res) {
 	} else {
 		respondJSON(res, '{}');
 	}
+}
+
+function myitems(req, res) {
+	var playerid = req.session.playerid;
+	var player = util.getPlayer(parseInt(playerid));
+	respondJSON(res, JSON.stringify(player.items));
+}
+
+function getItem(req, res) {
+	var playerid = req.session.playerid;
+	var itemname = req.body.itemname;
+	var player = util.getPlayer(parseInt(playerid));
+	// 追加して重複は削除
+	player.items.push(itemname);
+	player.items = player.items.filter(function (x, i, self) {
+            return self.indexOf(x) === i;
+        });
+	
+	respondJSON(res, JSON.stringify( {code: 1, message: itemname + "を手に入れた!" } ));
 }
 
 function myid(req, res) {
@@ -104,21 +125,21 @@ function paint(req, res) {
 function locker(req, res) {
 	var roomid = req.body.roomid;
 	var item = res.app.locals.items['locker'];
-	var result = item.use(roomid);
+	var result = item.use(parseInt(roomid));
 	respondJSON(res, JSON.stringify(result));
 }
 
 function nullPeinter(req, res) {
 	var roomid = req.body.roomid;
 	var item = res.app.locals.items['nullPeinter'];
-	var result = item.use(roomid);
+	var result = item.use(parseInt(roomid));
 	respondJSON(res, JSON.stringify(result));
 }
 
 function trap(req, res) {
 	var roomid = req.body.roomid;
 	var item = res.app.locals.items['trap'];
-	var result = item.use(roomid);
+	var result = item.use(parseInt(roomid));
 	respondJSON(res, JSON.stringify(result));
 }
 

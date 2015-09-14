@@ -37,6 +37,10 @@
  Room.prototype.turnColor = function (color) {
 	 if (this.isLocked()) {
 		 return new Result(FAILURE, this.name + 'の色を塗り替えることができない!この部屋にはロックがかかっているようだ。'); 
+	 } else
+	 if (this.isTrapped == true) {
+		 this.isTrapped = false;
+		 return new Result(-2, this.name + 'にはトラップが仕掛けられていたようだ!');
 	 }
 	 
 	 this.color = color;

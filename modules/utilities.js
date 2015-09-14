@@ -26,7 +26,7 @@ function getRoom(roomId) {
 	var rooms = app.locals.rooms;
 	for (var i = 0; i < rooms.length; i++) {
 		var room = rooms[i];
-		if (room.id == roomId) return room;
+		if (room.id == parseInt(roomId)) return room;
 	}
 }
 

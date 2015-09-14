@@ -11,6 +11,8 @@
  
  var GameStatus = require('../modules/gamestatus');
  
+ var old;
+ 
  var MASTER_KEY = 'YSFHCSC';
  
  function authorize(req, res, next) {
@@ -50,14 +52,36 @@
 	 }
 	 
 	 res.app.locals.started = new Date().getTime();
+	 
+	 old = new Date().getTime();
+	 
 	 res.app.locals.timerId = setInterval(function gameTimer() {
-		 var left = res.app.locals.config.left - (new Date().getTime() - res.app.locals.started);
-		 if (left > 0) {
-			 res.app.locals.left = left;
-		 } else {
-			 stop(res);
-		 }
-		 console.log(res.app.locals.left);
+		 
+		var now = new Date().getTime();
+		
+		// 残り時間を計算
+		var left = res.app.locals.config.left - (now - res.app.locals.started);
+		if (left > 0) {
+			res.app.locals.left = left;
+		} else {
+			stop(res);
+		}
+		
+		// ロック解除カウンター
+		res.app.locals.rooms.forEach(function (room) {
+			if (!room.isLocked()) return;
+				
+			var diff = now - old;
+			if (room.lockExpire > diff) {
+				room.lockExpire -= diff;
+			} else {
+				room.lockExpire = 0;
+			}
+		});
+		
+		console.log(res.app.locals.left);
+		old = new Date().getTime();
+		
 	 }, 16);
 	 res.app.locals.state = GameStatus.game_started;
 	 res.end('THE GAME HAS STARTED.');
