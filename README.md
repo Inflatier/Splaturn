@@ -49,6 +49,12 @@ isTrapped: (boolean) その部屋にトラップが仕掛けられている(true
 
 ## クライアント用API
 
+#### GET /myname
+自分の名前を売る(至言)
+
+#### GET /mycolor 
+自分の名前をColors列挙隊の整数で返すゾ
+
 #### GET /state
 ゲームの状態(エントリー中・ゲーム中・ゲーム終了済み)をGameStatus列挙体の数値で返す。クライアント側で if (State.wating_entry)みたいに使うことを想定してます。  
 

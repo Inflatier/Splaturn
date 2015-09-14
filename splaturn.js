@@ -72,7 +72,7 @@ var entry = require('./routes/entry');
 var endpoints = require('./routes/endpoints')(app);
 
 // 管理用API
-var master = require('./routes/master');
+var control = require('./routes/control');
 
 // APIのエンドポイントたち
 app.get('/entry', function (req, res) {
@@ -106,7 +106,7 @@ app.use('/qr', proxy('api.qrserver.com', {
   }
 }));
 
-app.use('/control', master);
+app.use('/control', control);
 
 // 静的なファイルを提供するモジュール
 app.use(express.static(__dirname + '/public'));
