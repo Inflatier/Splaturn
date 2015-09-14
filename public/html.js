@@ -20,12 +20,6 @@ request
   });
 */
 
-var body = d3.select("body").style({
-	"background":"black",
-	width:"100%",
-	height:"100%",
-});
-
 var temp = {
 				"font-size":"30px",
 				width:"30%",
@@ -48,7 +42,7 @@ var rule = body.append("div").on("click",function(){
             "margin-left": "0%",
             "margin-top": "0%",
             width: "100%",
-            height: "100%",
+            height: "170%",
             "z-index": 100,
             opacity: 0,
             "border-radius":"20px",
@@ -127,7 +121,7 @@ var QR = body.append("div").on("click", function () {
 			});
 			QRmain.append("p").style({
 				position: "absolute",
-				"margin-top": "5%",
+				"margin-top": "15%",
 				"font-size": "30",
 				"text-align": "center",
 				width:"100%",
@@ -169,7 +163,7 @@ var QR = body.append("div").on("click", function () {
 				position: "absolute",
 				width: "80%",
 				//height: "20%",
-				"margin-top": "20%",
+				"margin-top": "45%",
 				"margin-left": "10%",
 				"font-size": "15",
 				"text-align": "center",
@@ -185,7 +179,7 @@ var QR = body.append("div").on("click", function () {
 				width: "30%",
 				height: "15%",
 				position: "absolute",
-				"margin-top": "30%",
+				"margin-top": "55%",
 				"margin-left": "35%",
 				background: "rgb(255, 238, 80)",
 				"border-radius": "20%",
