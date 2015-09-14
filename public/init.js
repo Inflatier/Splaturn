@@ -1,5 +1,11 @@
 var request = window.superagent;
 
+var Colors = {
+	'none': 1,
+	'red': 2,
+	'blue': 3
+};
+
 var body = d3.select("body").style({
 	"background":"black",
 	width:"100%",
@@ -88,23 +94,24 @@ request
   .get("/mycolor")
   .end(function(err, res){
 	
-	if(res.body==1){
+	if (res.body == Colors.red) {
 		player.color="red";
-	}
-	if(res.body==2){
+	} else
+	if (res.body == Colors.blue) {
 		player.color="blue";
 	}
+	
 	
 	body.append("p").style({
 		position: "absolute",
 		"margin-top": "70px",
 		"text-align": "center",
 		width: "100%",
-		color:function(){return player.color},
+		color: function() { return player.color },
 		"font-size":"40px",
 	}).text(function(){
-		if(player.color=="red"){return "赤チーム"};
-		if(player.color=="blue"){return "青チーム"};
+		if (player.color == "red"){ return "赤チーム" };
+		if (player.color == "blue"){ return "青チーム" };
 	});
 	
   });

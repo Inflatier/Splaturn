@@ -84,6 +84,8 @@ app.get('/game', function (req, res) {
 app.post('/join', entry.join);
 app.get('/quit', entry.quit);
 
+app.get('/myid', endpoints.myid);
+app.get('/notifications', endpoints.notifications);
 app.get('/myname', endpoints.myname);
 app.get('/mycolor', endpoints.mycolor);
 app.get('/state', endpoints.state);

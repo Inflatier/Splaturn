@@ -37,6 +37,8 @@ function Endpoints(instance) {
 	app = instance;
 	util = require('../modules/utilities')(app);
 	var endpoints = {
+		'myid': myid,
+		'notifications': notifications,
 		'myname': myname,
 		'mycolor': mycolor,
 		'state': state,
@@ -50,34 +52,44 @@ function Endpoints(instance) {
 	return endpoints;
 }
 
-function myname(req, res) {
+function respondJSON(res, json) {
 	res.writeHead(200, {'Content-Type': 'application/json;charset=utf-8'});
-	res.write(req.session.playername);
+	res.write(json.toString());
 	res.end();
+}
+
+function notifications(req, res) {
+	var player = util.getPlayer(req.session.playerid);
+	if (player.notifications.length >= 1) {
+		respondJSON(res, JSON.stringify(player.notifications[0]));
+		player.notifications.unshift();
+	} else {
+		respondJSON(res, '{}');
+	}
+}
+
+function myid(req, res) {
+	respondJSON(res, req.session.playerid);
+}
+
+function myname(req, res) {
+	respondJSON(res, req.session.playername);
 }
 
 function mycolor(req, res) {
-	res.writeHead(200, {'Content-Type': 'application/json;charset=utf-8'});
-	res.write(req.session.color);
-	res.end();
+	respondJSON(res, req.session.color);
 }
 
 function state(req, res) {
-	res.writeHead(200, {'Content-Type': 'application/json;charset=utf-8'});
-	res.write(res.app.locals.state.toString());
-	res.end();
+	respondJSON(res, res.app.locals.state.toString());
 }
 
 function left(req, res) {
-	res.writeHead(200, {'Content-Type': 'application/json;charset=utf-8'});
-	res.write(res.app.locals.left.toString());
-	res.end();
+	respondJSON(res, res.app.locals.left.toString());
 }
 
 function rooms(req, res) {
-	res.writeHead(200, {'Content-Type': 'application/json;charset=utf-8'});
-	res.write(JSON.stringify(res.app.locals.rooms));
-	res.end();
+	respondJSON(res, JSON.stringify(res.app.locals.rooms));
 }
 
 function paint(req, res) {
@@ -86,36 +98,28 @@ function paint(req, res) {
 	var color = req.session.color;
 	
 	var result = room.turnColor(color);
-	res.writeHead(200, {'Content-Type': 'application/json;charset=utf-8'});
-	res.write(JSON.stringify(result));
-	res.end();
+	respondJSON(res, JSON.stringify(result));
 }
 
 function locker(req, res) {
 	var roomid = req.body.roomid;
 	var item = res.app.locals.items['locker'];
 	var result = item.use(roomid);
-	res.writeHead(200, {'Content-Type': 'application/json;charset=utf-8'});
-	res.write(JSON.stringify(result));
-	res.end();
+	respondJSON(res, JSON.stringify(result));
 }
 
 function nullPeinter(req, res) {
 	var roomid = req.body.roomid;
 	var item = res.app.locals.items['nullPeinter'];
 	var result = item.use(roomid);
-	res.writeHead(200, {'Content-Type': 'application/json;charset=utf-8'});
-	res.write(JSON.stringify(result));
-	res.end();
+	respondJSON(res, JSON.stringify(result));
 }
 
 function trap(req, res) {
 	var roomid = req.body.roomid;
 	var item = res.app.locals.items['trap'];
 	var result = item.use(roomid);
-	res.writeHead(200, {'Content-Type': 'application/json;charset=utf-8'});
-	res.write(JSON.stringify(result));
-	res.end();
+	respondJSON(res, JSON.stringify(result));
 }
 
 module.exports = Endpoints;

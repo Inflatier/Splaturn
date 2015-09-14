@@ -49,6 +49,12 @@ isTrapped: (boolean) その部屋にトラップが仕掛けられている(true
 
 ## クライアント用API
 
+#### GET /myid
+自分のIDが分かるゾ。クライアントにとってほとんど意味は無いゾ。
+
+#### GET /notifications
+通知。仕様は未定。
+
 #### GET /myname
 自分の名前を売る(至言)
 

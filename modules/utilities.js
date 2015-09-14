@@ -16,7 +16,8 @@ function Utilities(instance) {
 	app = instance;
 	var utilities = {
 		'getRoom': getRoom,
-		'getItem': getItem
+		'getItem': getItem,
+		'getPlayer': getPlayer
 	}
 	return utilities;
 };
@@ -33,6 +34,14 @@ function getItem(itemHash) {
 	var item = app.locals.items[itemHash];
 	if (!item) throw Error('アイテムの名前が間違っていますね〜');
 	return item;
+}
+
+function getPlayer(playerid) {
+	for (var i = 0; i < app.locals.players.length; i++) {
+		if (app.locals.players[i].id == playerid) {
+			return app.locals.players[i];
+		}
+	}
 }
 
 module.exports = Utilities;
