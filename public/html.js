@@ -185,7 +185,6 @@ var QR = body.append("div").on("click", function () {
 				"border-radius": "20%",
 			});
 			
-
 			$(function () {
 				$('#foo').submit(function () {
 					console.log("ok");
@@ -200,7 +199,9 @@ var QR = body.append("div").on("click", function () {
 					})
 					.done(function (data) {
 						//サーバーに送る。
-						console.log(data);
+						console.log(data[0].symbol[0].data);
+						
+						
 					});
 					return false;
 				});
@@ -263,7 +264,7 @@ var item = body.append("div").on("click",function(){
 
         var list = itemmain.append("div").style({
             position:"absolute",
-            "margin-top":"15%",
+            "margin-top":"20%",
             "margin-left":"20%",
             width:"60%",
             height:"380",
@@ -288,7 +289,7 @@ var item = body.append("div").on("click",function(){
         //     }).text(player.item[i]);
         // };
 
-		for(var i=0;i<=player.item.length;i++){
+		for(var i=0;i<player.item.length;i++){
 			list.append('img').attr({
 					'src'   : function(){return player.item[i] + '.png';},
 					'width' : 50,
@@ -299,73 +300,78 @@ var item = body.append("div").on("click",function(){
 				
 				//player.item[this.id]によって使うアイテムを認識
 				//アイテムによって、対象の部屋のIDとともサーバーに送信
+				var mapFitem = itemmain.append("div");
+				for(var i=3;i<=5;i++){
+					mapFitem.append("div").on("click",function(d,i){
+
+						scopefloor=this.id;
+
+						mapFitem.selectAll("div").style({
+							color:"white",
+							background:"gray",
+						});
+						boadFitem.style({
+							background:"white",
+						})
+						mapFitem.select("div:nth-of-type("+(scopefloor-2)+")").style({
+							color:"black",
+							background:"white",
+						});
+
+						//boadFitem.append("div").html(mapsvg[i]);
+						/*selectAll("div").data(map[i]).enter().append("div").style({
+							position:"absolute",
+							"margin-left":function(e,n){return 10+n%3*90+"px";},
+							"margin-top":function(e,n){return 7+Math.floor(n/3)*87+"px";},
+							width:"80px",
+							height:"80px",
+							border: "2px solid black",
+							background:function(e,n){return e.color;},
+							"text-align":"center",
+							"line-height":"80px",
+							color:function(e,n){
+								if(e.color=='')return "black";
+							},
+						}).text(function(e,n){
+							return e.name;
+						});*/
+
+						}).style({
+							color:"white",
+							"font-size":"20px",
+							position:"absolute",
+							height:"40px",
+							width:"15%",
+							"margin-top":function(){return 160+40*(i-2)},
+							"margin-left":"5%",
+							background:"gray",
+							"text-align":"center",
+							"line-height":"40px",
+						}).attr({
+							id:i,
+						}).text(function(){return "F"+(i)});
+				}
+				var boadFitem = mapFitem.append("div").style({
+					background:"white",
+					position:"absolute",
+					"margin-left":"19%",
+					"margin-top":"200px",
+					width:"70%",
+					height:"200px",
+				});
+				
 				
 				switch(player.item[this.id]){
 					case '色固定':
 						
+						break;
 					case '塗り替え':
 						
+						break;
 					case 'トラップ':
 						
 						//対象選択用のマップを作る
-						var mapfitem = itemmain.append("div");
-						mapfitem.selectAll("div").data(map).enter()
-							.append("div").on("click",function(d,i){
-
-								boadfitem.selectAll("div").remove();
-
-								mapfitem.selectAll("div").style({
-									color:"white",
-									background:"gray",
-								});
-								boadfitem.style({
-									background:"white",
-								})
-								mapfitem.select("div:nth-of-type("+(i+1)+")").style({
-									color:"black",
-									background:"white",
-								});
-
-								boadfitem.append("div").html(mapsvg[i]);/*.style({
-									position:"absolute",
-									"margin-left":function(e,n){return 10+n%3*90+"px";},
-									"margin-top":function(e,n){return 7+Math.floor(n/3)*87+"px";},
-									width:"80px",
-									height:"80px",
-									border: "2px solid black",
-									background:function(e,n){return e.color;},
-									"text-align":"center",
-									"line-height":"80px",
-									color:function(e,n){
-										if(e.color=='')return "black";
-									},
-								}).text(function(e,n){
-									return e.name;
-								});*/
-
-							}).style({
-								color:"white",
-								"font-size":"20px",
-								position:"absolute",
-								height:"40px",
-								width:"15%",
-								"margin-top":function(d,i){return 160+40*(i+1)},
-								"margin-left":"5%",
-								background:"gray",
-								"text-align":"center",
-								"line-height":"40px",
-								"z-index":100,
-							}).text(function(d,i){return "F"+(i+1)});
-
-						var boadfitem = mapfitem.append("div").style({
-							background:"white",
-							position:"absolute",
-							"margin-left":"19%",
-							"margin-top":"200px",
-							width:"70%",
-							height:"200px",
-							"z-index":100,
-						});
+						
 						
 						//ここでサーバーにplayer.item[this.id]と部屋IDを送信
 						

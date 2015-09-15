@@ -1,41 +1,41 @@
-var COLORS = {
-	red: 'red',
-	blue: 'blue',
-	none:'',
-}
+var Colors = {
+	'none': 1,
+	'red': 2,
+	'blue': 3
+};
 
 var lefttime=500;
 
 var player = {
 	color:"red",
-	item:["色固定","塗り替え","トラップ","色固定","塗り替え","トラップ"],
+	item:["色固定","塗り替え","トラップ",],
 };
 var map = [
 	
-	{id: 31, name: 'S31', color: COLORS.red, lockExpire: 0, isTrapped:false,},
-	{id: 32, name: 'S32', color: COLORS.blue, lockExpire: 0,isTrapped:false,},
-	{id: 33, name: 'S33', color: COLORS.blue, lockExpire: 0,isTrapped:false,},
-	{id: 34, name: 'S34', color: COLORS.red, lockExpire: 0,isTrapped:false,},
-	{id: 35, name: 'S35', color: COLORS.blue, lockExpire: 0,isTrapped:false,},
-	{id: 36, name: 'S36', color: COLORS.red, lockExpire: 0,isTrapped:false,},
-	{id: 37, name: 'S37', color: COLORS.none, lockExpire: 0,isTrapped:false,},
-	{id: 38, name: 'S38', color: COLORS.blue, lockExpire: 0,isTrapped:false,},
-	{id: 41, name: 'S41', color: COLORS.red, lockExpire: 0, isTrapped:false,},
-	{id: 42, name: 'S42', color: COLORS.blue, lockExpire: 0,isTrapped:false,},
-	{id: 43, name: 'S43', color: COLORS.blue, lockExpire: 0,isTrapped:false,},
-	{id: 44, name: 'S44', color: COLORS.red, lockExpire: 0,isTrapped:false,},
-	{id: 45, name: 'S45', color: COLORS.blue, lockExpire: 0,isTrapped:false,},
-	{id: 46, name: 'S46', color: COLORS.red, lockExpire: 0,isTrapped:false,},
-	{id: 47, name: 'S47', color: COLORS.none, lockExpire: 0,isTrapped:false,},
-	{id: 48, name: 'S48', color: COLORS.blue, lockExpire: 0,isTrapped:false,},
-	{id: 51, name: 'S51', color: COLORS.red, lockExpire: 0, isTrapped:false,},
-	{id: 52, name: 'S52', color: COLORS.blue, lockExpire: 0,isTrapped:false,},
-	{id: 53, name: 'S53', color: COLORS.blue, lockExpire: 0,isTrapped:false,},
-	{id: 54, name: 'S54', color: COLORS.red, lockExpire: 0,isTrapped:false,},
-	{id: 55, name: 'S55', color: COLORS.blue, lockExpire: 0,isTrapped:false,},
-	{id: 56, name: 'S56', color: COLORS.red, lockExpire: 0,isTrapped:false,},
-	{id: 57, name: 'S57', color: COLORS.none, lockExpire: 0,isTrapped:false,},
-	{id: 58, name: 'S58', color: COLORS.blue, lockExpire: 0,isTrapped:false,},
+	{id: 31, name: 'S31', color: 1, lockExpire: 0, isTrapped:false,},
+	{id: 32, name: 'S32', color: 2, lockExpire: 0,isTrapped:false,},
+	{id: 33, name: 'S33', color: 0, lockExpire: 0,isTrapped:false,},
+	{id: 34, name: 'S34', color: 0, lockExpire: 0,isTrapped:false,},
+	{id: 35, name: 'S35', color: 0, lockExpire: 0,isTrapped:false,},
+	{id: 36, name: 'S36', color: 0, lockExpire: 0,isTrapped:false,},
+	{id: 37, name: 'S37', color: 0, lockExpire: 0,isTrapped:false,},
+	{id: 38, name: 'S38', color: 0, lockExpire: 0,isTrapped:false,},
+	{id: 41, name: 'S41', color: 0, lockExpire: 0, isTrapped:false,},
+	{id: 42, name: 'S42', color: 0, lockExpire: 0,isTrapped:false,},
+	{id: 43, name: 'S43', color: 0, lockExpire: 0,isTrapped:false,},
+	{id: 44, name: 'S44', color: 0, lockExpire: 0,isTrapped:false,},
+	{id: 45, name: 'S45', color: 0, lockExpire: 0,isTrapped:false,},
+	{id: 46, name: 'S46', color: 0, lockExpire: 0,isTrapped:false,},
+	{id: 47, name: 'S47', color: 0, lockExpire: 0,isTrapped:false,},
+	{id: 48, name: 'S48', color: 0, lockExpire: 0,isTrapped:false,},
+	{id: 51, name: 'S51', color: 0, lockExpire: 0, isTrapped:false,},
+	{id: 52, name: 'S52', color: 0, lockExpire: 0,isTrapped:false,},
+	{id: 53, name: 'S53', color: 0, lockExpire: 0,isTrapped:false,},
+	{id: 54, name: 'S54', color: 0, lockExpire: 0,isTrapped:false,},
+	{id: 55, name: 'S55', color: 0, lockExpire: 0,isTrapped:false,},
+	{id: 56, name: 'S56', color: 0, lockExpire: 0,isTrapped:false,},
+	{id: 57, name: 'S57', color: 0, lockExpire: 0,isTrapped:false,},
+	{id: 58, name: 'S58', color: 0, lockExpire: 0,isTrapped:false,},
 	
 ];
 

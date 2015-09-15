@@ -1,11 +1,5 @@
 var request = window.superagent;
 
-var Colors = {
-	'none': 1,
-	'red': 2,
-	'blue': 3
-};
-
 var body = d3.select("body").style({
 	"background":"black",
 	width:"100%",
