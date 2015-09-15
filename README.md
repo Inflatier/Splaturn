@@ -83,17 +83,17 @@ itemname 取得するアイテムの名前(locker, nullPeinter, trap)
 パラメータ:  
 roomid 塗る部屋のID
 
-#### POST /locker
+#### POST /部屋ロック
 任意の部屋にロックをかける。戻り値はResultオブジェクト。ロックの秒数はサーバーのconfig.jsonにて指定。成功時はcode: 1を返す。部屋がロックされているとcode: -1を返し失敗する。    
 パラメータ:  
 roomid ロックをかける部屋のID
 
-#### POST /nullPeinter
+#### POST /色消し
 任意の部屋の色を消す。戻り値はResultオブジェクト。成功時はcode: 1を返す。部屋がロックされているとcode: -1を返し失敗する。  
 パラメータ:  
 roomid 色を消す部屋のID
 
-#### POST /trap
+#### POST /トラップ
 任意の部屋にトラップを仕掛ける。戻り値はResultオブジェクト。成功時はcode: 1を返す。部屋がロックされているとcode: -1を返し失敗する。  
 パラメータ:  
 roomid トラップを仕掛ける部屋のID  
