@@ -362,10 +362,10 @@ var item = body.append("div").on("click",function(){
 				
 				
 				switch(player.item[this.id]){
-					case '色固定':
+					case '部屋ロック':
 						
 						break;
-					case '塗り替え':
+					case '色消し':
 						
 						break;
 					case 'トラップ':
