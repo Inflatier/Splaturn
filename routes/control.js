@@ -10,6 +10,8 @@
  var router = express.Router();
  
  var GameStatus = require('../modules/gamestatus');
+ var Event = require('../modules/event');
+ var Events = require('../modules/events');
  
  var old;
  
@@ -84,6 +86,10 @@
 		
 	 }, 16);
 	 res.app.locals.state = GameStatus.game_started;
+	 
+	 var util = require('../modules/utilities')(res.app);
+	 util.broadcast(new Event(Events.started, null, null, 'ゲーム開始!'));
+	 
 	 res.end('THE GAME HAS STARTED.');
  }
  
@@ -104,6 +110,8 @@
 	 }
 	
 	stop(res);
+	var util = require('../modules/utilities')(res.app);
+	util.broadcast(new Event(Events.finished, null, null, 'ゲーム終了!'));
 	res.end('THE GAME HAS STOPPED.');
  }
  

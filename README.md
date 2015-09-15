@@ -9,6 +9,36 @@
 5. クライアントがゲームを進めていく。
 6. 終了については今考えているところだゾ。
 
+#### Events列挙体
+    {
+        "started": 10,
+        "finished": 11,
+        "painted": 12,
+        "locked": 13,
+        "unpeinted": 14,
+        "trapped": 15
+    }
+イベントの一覧だゾ。読んで字のごとし。でも一応説明しておこうか。  
+started ゲームが開始した  
+finished ゲームが終了した  
+painted 部屋が塗り替えられた  
+locked 部屋がロックされた  
+unpeinted 部屋の色が消された  
+trapped 部屋にトラップが仕掛けられた  
+
+#### Eventオブジェクト
+    {
+        "event": 11
+        "emitter": 114514
+        "target": 38
+        "message": "YJSNPIがS38教室を赤色に塗り替えた!"
+    }
+発生したイベントを表現する。  
+event イベントID。Events列挙体から選んでくださいね。  
+emitter イベントを起こした人のID。  
+target 対象の部屋のID。  
+message メッセージ(直球)
+
 #### Resultオブジェクト
     {
         "code": 1,
@@ -61,7 +91,7 @@ itemname 取得するアイテムの名前(locker, nullPeinter, trap)
 自分のIDが分かるゾ。クライアントにとってほとんど意味は無いゾ。
 
 #### GET /notifications
-通知。仕様は未定。
+通知。Eventオブジェクトの配列が返る。一度このAPIにアクセスするとその通知は消える。
 
 #### GET /myname
 自分の名前を売る(至言)

@@ -44,6 +44,7 @@
 	 }
 	 
 	 this.color = color;
+	 
 	 return new Result(SUCCESS, this.name + 'の色を塗り替えた!');
  };
  

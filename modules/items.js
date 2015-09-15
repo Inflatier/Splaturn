@@ -12,6 +12,8 @@ var Item = require('./item');
 var Colors = require('./colors');
 var Result = require('./result')
 var config = require('../config.json');
+var Event = require('../modules/event');
+var Events = require('../modules/events');
 var app;
 var util;
 
@@ -37,6 +39,7 @@ function Items(instance) {
 					// アイテム一覧から削除
 					player.items.splice(player.items.indexOf('locker'), 1);
 					room.lockExpire = config.items.locker.expire;
+					util.broadcast(new Event(Events.locked, parseInt(playerid), parseInt(target), player.name + 'が' + room.name + 'に' + parseInt(room.lockExpire / 1000) + '秒間のロックを掛けた。'));
 					return new Result(SUCCESS, room.name + 'に' + parseInt(room.lockExpire / 1000) + '秒間のロックを掛けた。');
 				}
 			),
@@ -55,6 +58,7 @@ function Items(instance) {
 					// アイテム一覧から削除
 					player.items.splice(player.items.indexOf('nullPeinter'), 1);
 					room.color = Colors.none;
+					util.broadcast(new Event(Events.unpeinted, parseInt(playerid), parseInt(target), player.name + 'が' + room.name + 'の色を消した!'));
 					return new Result(SUCCESS, room.name + 'の色を消した!');
 				}
 			),
@@ -73,6 +77,7 @@ function Items(instance) {
 					// アイテム一覧から削除
 					player.items.splice(player.items.indexOf('trap'), 1);
 					room.isTrapped = true;
+					// util.broadcast(new Event(Events.trapped, playerid, target, player.name + 'が' + room.name + 'にトラップを仕掛けた!'));
 					return new Result(SUCCESS, room.name + 'にトラップを仕掛けた!');
 				}
 			)
