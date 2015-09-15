@@ -8,7 +8,11 @@ var lefttime=500;
 
 var player = {
 	color:"red",
+<<<<<<< HEAD
 	item:["色固定","塗り替え","トラップ",],
+=======
+	item:["部屋ロック","色消し","トラップ"],
+>>>>>>> 7a2ff6ac54e1741fa95e3174f02a2162fb5427c5
 };
 var map = [
 	

@@ -124,22 +124,25 @@ function paint(req, res) {
 
 function locker(req, res) {
 	var roomid = req.body.roomid;
+	var playerid = req.session.playerid;
 	var item = res.app.locals.items['locker'];
-	var result = item.use(parseInt(roomid));
+	var result = item.use(parseInt(roomid), parseInt(playerid));
 	respondJSON(res, JSON.stringify(result));
 }
 
 function nullPeinter(req, res) {
 	var roomid = req.body.roomid;
+	var playerid = req.session.playerid;
 	var item = res.app.locals.items['nullPeinter'];
-	var result = item.use(parseInt(roomid));
+	var result = item.use(parseInt(roomid), parseInt(playerid));
 	respondJSON(res, JSON.stringify(result));
 }
 
 function trap(req, res) {
 	var roomid = req.body.roomid;
+	var playerid = req.session.playerid;
 	var item = res.app.locals.items['trap'];
-	var result = item.use(parseInt(roomid));
+	var result = item.use(parseInt(roomid), parseInt(playerid));
 	respondJSON(res, JSON.stringify(result));
 }
 
