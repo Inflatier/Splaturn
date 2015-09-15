@@ -94,9 +94,9 @@ app.get('/state', endpoints.state);
 app.get('/left', endpoints.left);
 app.get('/rooms', endpoints.rooms);
 app.post('/paint', endpoints.paint);
-app.post('/部屋ロック', endpoints.locker);
-app.post('/色消し', endpoints.nullPeinter);
-app.post('/トラップ', endpoints.trap);
+app.post('/locker', endpoints.locker);
+app.post('/nullPeinter', endpoints.nullPeinter);
+app.post('/trap', endpoints.trap);
 
 
 app.get('/', function index(req, res) {
