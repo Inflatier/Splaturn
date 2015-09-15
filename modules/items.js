@@ -28,6 +28,7 @@ function Items(instance) {
 			new Item('locker',
 				function (target) {
 					var room = util.getRoom(target);
+					if (!room) return new Result(FAILURE, "そんな部屋はないです。");
 					if (room.isLocked()) {
 						return new Result(FAILURE, room.name + 'にはロックを掛けることができない!この部屋には既にロックがかかっているようだ。');
 					}
@@ -42,6 +43,7 @@ function Items(instance) {
 			new Item('nullPeinter',
 				function (target) {
 					var room = util.getRoom(target);
+					if (!room) return new Result(FAILURE, "そんな部屋はないです。");
 					if (room.isLocked()) {
 						return new Result(FAILURE, room.name + 'の色を消すことができない!この部屋にはロックがかかっているようだ。'); 
 					}
@@ -56,6 +58,7 @@ function Items(instance) {
 			new Item('trap',
 				function (target) {
 					var room = util.getRoom(target);
+					if (!room) return new Result(FAILURE, "そんな部屋はないです。");
 					if (room.isLocked()) {
 						return new Result(FAILURE, room.name + 'にトラップを仕掛けることができない!この部屋はロックがかかっているようだ。');
 					}

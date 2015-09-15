@@ -25,6 +25,8 @@
 
 var Player = require('../modules/player');
 
+var unique_id = 931;
+
 function join(req, res) {
 	if (req.session.entried == true) {
 		// 既にエントリー済みだった場合はgameにリダイレクト
@@ -32,14 +34,18 @@ function join(req, res) {
 		return;
 	}
 	
+	unique_id += 810
+	
 	// エントリーが済んでいない場合はエントリー
 	var name = req.body.playername;
 	var color = req.body.color;
-	var player = new Player(name, color);
+	var player = new Player(unique_id, name, color);
 	
 	res.app.locals.players.push(player);
 	req.session.playername = name;
 	req.session.color = color;
+	req.session.playerid = unique_id;
+	
 	// ユーザーをエントリー済みに
 	req.session.entried = true;
 	
