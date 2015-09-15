@@ -201,6 +201,28 @@ var QR = body.append("div").on("click", function () {
 						//サーバーに送る。
 						console.log(data[0].symbol[0].data);
 						
+						switch(data[0].symbol[0].data[0]){
+								
+							case "S":
+								request
+								  .post("/paint")
+								  .send(data[0].symbol[0].data)
+								  .end(function(err, res){
+									console.log(res.body);
+								  });
+								break;
+							case "I":
+								break;
+							case "N":
+								break;
+								
+						}
+						/*request
+						  .post("/paint")
+						  .send({name: name, text: text})
+						  .end(function(err, res){
+							console.log(res.body);
+						  });*/
 						
 					});
 					return false;
