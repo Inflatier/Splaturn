@@ -62,3 +62,45 @@ function happenTrap(){
 		}).text(i);
 	}
 }
+//result通知用関数
+function message(text){
+	var m1 = body.append("div").style({
+		position:"absolute",
+		"background-color":"black",
+		"margin-left":0,
+		"margin-top":0,
+		width:"100%",
+		height:"100%",
+		height:"100%",
+		opacity:0.5,
+		"z-index":100001,
+	})
+	var m2 = body.append("div").style({
+		position:"absolute",
+		color:"white",
+		"background-color":"skyblue",
+		"margin-left":0,
+		"margin-top":"30%",
+		width:"100%",
+		height:"50%",
+		"z-index":100002,
+	});
+	m2.append("p").style({
+		color:"white",
+		width:"100%",
+		"margin-top":"120",
+		"text-align": "center",
+	}).text(text);
+	setTimeout(function(){
+		m1.transition().duration(500).style({
+			opacity:0,
+		});
+		m2.transition().duration(500).style({
+			opacity:0,
+		});
+	},500)
+	setTimeout(function(){
+		m1.remove();
+		m2.remove();
+	},1000)
+}

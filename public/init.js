@@ -80,7 +80,7 @@ request
 
 //map作成
 for(var i=3;i<=5;i++){
-	mapdiv.append("div").on("click",function(d,i){
+	mapdiv.append("div").on("click",function(){
 
 		scopefloor=this.id;
 
@@ -95,8 +95,8 @@ for(var i=3;i<=5;i++){
 			color:"black",
 			background:"white",
 		});
-
-		//boad.append("div").html(mapsvg[i]);
+		boadreset();
+		
 		/*selectAll("div").data(map[i]).enter().append("div").style({
 			position:"absolute",
 			"margin-left":function(e,n){return 10+n%3*90+"px";},
@@ -136,10 +136,14 @@ var boad = mapdiv.append("div").style({
 	"margin-top":"200px",
 	width:"70%",
 	height:"200px",
-});
+}).append("div");
 
 
-
+//map描画更新
+function boadreset(){
+	boad.html(" ");
+	boad.html(mapsvg[scopefloor]);
+}
 
 //data更新
 setInterval(function(){
@@ -163,7 +167,6 @@ setInterval(function(){
   });
 	
 },1000);
-
 
 
 

@@ -173,7 +173,7 @@ var QR = body.append("div").on("click", function () {
 			});
 			var formsubmit = form.append("input").on("click",function(){
 				formsubmit.style({
-					opacity:1,
+					"margin-top":"200%",
 				});
 			}).attr({
 				id: "send",
@@ -215,6 +215,7 @@ var QR = body.append("div").on("click", function () {
 								  .send({"roomid": id})
 								  .end(function(err, res){
 									console.log(res.body);
+									message(res.body.message);
 								  });
 								break;
 							case "I":
