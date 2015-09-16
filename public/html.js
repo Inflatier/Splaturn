@@ -171,7 +171,11 @@ var QR = body.append("div").on("click", function () {
 				// background: "rgb(255, 238, 80)",
 				// "border-radius": "20%",
 			});
-			form.append("input").attr({
+			var formsubmit = form.append("input").on("click",function(){
+				formsubmit.style({
+					opacity:1,
+				});
+			}).attr({
 				id: "send",
 				type: "submit",
 			}).style({
