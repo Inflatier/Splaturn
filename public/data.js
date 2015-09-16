@@ -4,15 +4,26 @@ var Colors = {
 	'blue': 3
 };
 
+var Events = {
+    "started": 10,
+    "finished": 11,
+    "painted": 12,
+    "locked": 13,
+    "unpeinted": 14,
+    "trapped": 15
+};
+
+var GameStatus = {
+    "wating_entry": 1,
+    "game_started": 2,
+    "game_finished": 3
+};
+
 var lefttime=500;
 
 var player = {
 	color:"red",
-<<<<<<< HEAD
-	item:["色固定","塗り替え","トラップ",],
-=======
-	item:["部屋ロック","色消し","トラップ"],
->>>>>>> 7a2ff6ac54e1741fa95e3174f02a2162fb5427c5
+	item:["部屋ロック", "色消し", "トラップ",],
 };
 var map = [
 	

@@ -30,6 +30,9 @@
 
 // Playerクラス
 var Player = require('../modules/player');
+var Event = require('../modules/event');
+var Events = require('../modules/events');
+var Colors = require('../modules/colors');
 var app = {};
 var util = {};
 
@@ -62,12 +65,8 @@ function respondJSON(res, json) {
 
 function notifications(req, res) {
 	var player = util.getPlayer(req.session.playerid);
-	if (player.notifications.length >= 1) {
-		respondJSON(res, JSON.stringify(player.notifications[0]));
-		player.notifications.unshift();
-	} else {
-		respondJSON(res, '{}');
-	}
+	respondJSON(res, JSON.stringify(player.notifications));
+	player.notifications = [];
 }
 
 function myitems(req, res) {
@@ -114,11 +113,26 @@ function rooms(req, res) {
 }
 
 function paint(req, res) {
-	var roomid = req.body.roomid;
+	var roomid = parseInt(req.body.roomid);
 	var room = util.getRoom(roomid);
-	var color = req.session.color;
+	var playerid = parseInt(req.session.playerid);
+	var player = util.getPlayer(playerid);
+	var color = parseInt(req.session.color);
+	var colorString = (function () {
+		switch (color) {
+			case Colors.red:
+				return '赤色';
+			case Colors.blue:
+				return '青色';
+			default:
+				return '無色';
+		}
+	})();
 	
 	var result = room.turnColor(color);
+	if (result.code >= 1) {
+		util.broadcast(new Event(Events.painted, playerid, roomid, player.name + 'が' + room.name + 'を' + colorString + 'に塗り替えた!'));
+	}
 	respondJSON(res, JSON.stringify(result));
 }
 

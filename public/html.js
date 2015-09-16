@@ -204,9 +204,10 @@ var QR = body.append("div").on("click", function () {
 						switch(data[0].symbol[0].data[0]){
 								
 							case "S":
+								var roomid = data[0].symbol[0].data.substring(1);
 								request
 								  .post("/paint")
-								  .send(data[0].symbol[0].data)
+								  .send({roomid: roomid})
 								  .end(function(err, res){
 									console.log(res.body);
 								  });
@@ -384,10 +385,10 @@ var item = body.append("div").on("click",function(){
 				
 				
 				switch(player.item[this.id]){
-					case '色固定':
+					case '部屋ロック':
 						
 						break;
-					case '塗り替え':
+					case '色消し':
 						
 						break;
 					case 'トラップ':

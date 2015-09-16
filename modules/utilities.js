@@ -17,7 +17,8 @@ function Utilities(instance) {
 	var utilities = {
 		'getRoom': getRoom,
 		'getItem': getItem,
-		'getPlayer': getPlayer
+		'getPlayer': getPlayer,
+		'broadcast': broadcast
 	}
 	return utilities;
 };
@@ -41,6 +42,20 @@ function getPlayer(playerid) {
 		if (app.locals.players[i].id == playerid) {
 			return app.locals.players[i];
 		}
+	}
+}
+
+function broadcast(event, loopback) {
+	if (loopback === true) {
+		app.locals.players.forEach(function (player) {
+			if (player.id != event.emitter) {
+				player.notifications.push(event);
+			}
+		});
+	} else {
+		app.locals.players.forEach(function (player) {
+			player.notifications.push(event);
+		});
 	}
 }
 
