@@ -204,10 +204,11 @@ var QR = body.append("div").on("click", function () {
 						switch(data[0].symbol[0].data[0]){
 								
 							case "S":
-								var roomid = data[0].symbol[0].data.substring(1);
+								var id = data[0].symbol[0].data.substring(1);
 								request
 								  .post("/paint")
-								  .send({roomid: roomid})
+								  .type('form')
+								  .send({"roomid": id})
 								  .end(function(err, res){
 									console.log(res.body);
 								  });
