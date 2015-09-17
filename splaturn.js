@@ -132,4 +132,4 @@ app.use(express.static(__dirname + '/public'));
 
 
 // 接続を受け付ける
-app.listen(14514);
+app.listen(process.env.PORT || 14514);
