@@ -328,7 +328,8 @@ var item = body.append("div").on("click",function(){
 				list.remove();
 				
 				//player.item[this.id]によって使うアイテムを認識
-				//アイテムによって、対象の部屋のIDとともサーバーに送信
+				//アイテムによって、対象の部屋のIDとともサーバーに送信for(var i=3;i<=5;i++){
+					
 				var mapFitem = itemmain.append("div");
 				for(var i=3;i<=5;i++){
 					mapFitem.append("div").on("click",function(d,i){

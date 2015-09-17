@@ -139,6 +139,10 @@ var boad = mapdiv.append("div").style({
 	width:"70%",
 	height:"200px",
 }).append("div");
+mapdiv.select("div:nth-of-type("+(scopefloor-2)+")").style({
+	color:"black",
+	background:"white",
+});
 
 
 //map描画更新
