@@ -116,8 +116,8 @@ app.post('/qr', function (req, res) {
     form.append('file', decodedFile, { filename: 'temp.png' });
   };
   
-  if (req.body.file) {
-    importFile(req.body.file, function (err, body) {
+  if (req.body) {
+    importFile(req.body, function (err, body) {
       res.end(body);
     });
   } else {
