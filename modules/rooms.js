@@ -10,9 +10,9 @@ var Colors = require('./colors');
 
 module.exports = [
     //3F
-    new Room(38, "S38教室", Colors.none),
-    new Room(37, "S37教室", Colors.none),
-    new Room(36, "S36教室", Colors.none),
+    new Room(38, "S38教室", Colors.node),
+    new Room(37, "S37教室", Colors.node),
+    new Room(36, "S36教室", Colors.node),
     new Room(35, "S35教室", Colors.none),
     new Room(34, "S34教室", Colors.none),
     new Room(33, "S33教室", Colors.none),

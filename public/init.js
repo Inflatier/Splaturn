@@ -28,6 +28,8 @@ function redisplay(){
 	
 	//マップ描画（スコープに応じたものを再描画）
 	
+	boadreset();
+	
 	
 }
 
@@ -143,6 +145,23 @@ var boad = mapdiv.append("div").style({
 function boadreset(){
 	boad.html(" ");
 	boad.html(mapsvg[scopefloor]);
+	var roomsFfill = boad.select("svg").select("g");
+	
+	for(var i=1;i<=8;i++){
+		var idpre = "" + scopefloor + i  ;
+		var judgeRoomColor = map.body[(scopefloor-3)*8+i-1].color;
+		switch(judgeRoomColor){
+				case 1:
+					document.getElementById( idpre ).setAttribute('fill','white');
+					break;
+				case 2:
+					document.getElementById( idpre ).setAttribute('fill','red');
+					break;
+				case 3:
+					document.getElementById( idpre ).setAttribute('fill','blue');
+					break;
+		}
+	}
 }
 
 //data更新
