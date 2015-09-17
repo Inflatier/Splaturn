@@ -161,7 +161,7 @@ var QR = body.append("div").on("click", function () {
 			}).style({
 				display:"block",
 				position: "absolute",
-				width: "80%",
+				// width: "80%",
 				//height: "20%",
 				"margin-top": "45%",
 				"margin-left": "10%",
