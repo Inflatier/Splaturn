@@ -77,7 +77,7 @@ function Items(instance) {
 					// アイテム一覧から削除
 					player.items.splice(player.items.indexOf('trap'), 1);
 					room.isTrapped = true;
-					// util.broadcast(new Event(Events.trapped, playerid, target, player.name + 'が' + room.name + 'にトラップを仕掛けた!'));
+					util.broadcast(new Event(Events.trapped, playerid, target, player.name + 'がどこかにトラップを仕掛けた!'));
 					return new Result(SUCCESS, room.name + 'にトラップを仕掛けた!');
 				}
 			)
