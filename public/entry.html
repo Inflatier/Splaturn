@@ -1,73 +1,13 @@
 <html>
 	<head>
-		<meta charset="utf-8" />
 		<title>エントリーのテスト</title>
-		<style>
-			body {
-				margin: 0;
-			    padding: 0;
-			    text-align: center;
-			    font-family: Arial, sans-serif;
-			    font-size: 28px;
-			    background: rgb(208, 208, 208);
-			}
-			#nameInput {
-				margin: 20% auto;
-				width: 80%;
-				height: 10%;
-			}
-			.btn {
-				display: inline-block;
-				width: 300px;
-				height: 300px;
-				margin: 5%;
-				border-radius: 50%;
-				color: white;
-				/*box-shadow: 10px 15px 10px gray;*/
-				font-size: 4em;
-				line-height: 300px;
-			}
-			#red {
-				background: red;
-			}
-			#blue {
-				background: blue;
-			}
-			#join {
-				margin: 5% auto;
-				width: 80%;
-				height: 240px;
-				font-size: 3.5em;
-				background: rgb(207, 33, 69);
-				color: white;
-				border-radius: 30px;
-				line-height: 240px;
-			}
-		</style>
 	</head>
 	<body>
-		<!-- <form method="post" action="/join">
+		<form method="post" action="/join">
 			<input type="text" name="playername" placeholder="名前" />
 			<input type="radio" name="color" value="2" checked>赤
 			<input type="radio" name="color" value="3">青
 			<input type="submit"  value="エントリー" />
-		</form> -->
-
-		<input type="text" name="playername" placeholder="名前を入力してください" id="nameInput"/>
-		<div style="width:100%;height:30%">
-			<div id="red" class="btn">赤</div>
-			<div id="blue" class="btn">青</div>
-		</div>
-		<div id="join">ゲームに参加！</div>
-		<script>
-			var rflg = 0,
-				bflg = 0,
-				redbtn = document.getElementById('red'),
-				bluebtn = document.getElementById('blue');
-
-			redbtn.addEventListener("click", function(){
-
-			});
-		</script>
+		</form>
 	</body>
 </html>
