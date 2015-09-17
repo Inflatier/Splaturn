@@ -100,6 +100,7 @@ var rule = body.append("div").on("click",function(){
 
 var QR = body.append("div").on("click", function () {
 
+		var memo64;
         QR.transition().duration(300).style({
             opacity: 0,
         });
@@ -144,6 +145,7 @@ var QR = body.append("div").on("click", function () {
 				"font-weight":"bold",
 				"font-size":30,
 			}).text("back");
+			
 			var form = QRmain.append("form").attr({
 				id: "foo",
 				onsubmit: "return false;",
@@ -175,6 +177,26 @@ var QR = body.append("div").on("click", function () {
 				formsubmit.style({
 					"margin-top":"200%",
 				});
+				
+				console.log(memo64);
+					
+					request
+					  .post("/qr")
+					  .type('form')
+					  .send(memo64)
+					  .end(function(err, res){
+						console.log(res.body);
+					
+						request
+						  .post("/paint")
+						  .type('form')
+						  .send({"roomid": res.body})
+						  .end(function(err, res){
+							console.log(res.body);
+							message(res.body.message);
+						  });
+				
+					  });
 			}).attr({
 				id: "send",
 				type: "submit",
@@ -189,6 +211,7 @@ var QR = body.append("div").on("click", function () {
 				"border-radius": "20%",
 			});
 			
+			/*
 			$(function () {
 				$('#foo').submit(function () {
 					console.log("ok");
@@ -196,7 +219,7 @@ var QR = body.append("div").on("click", function () {
 					$.ajax({
 						url: "qr",
 						method: "POST",
-						data: fd,
+						data: ,
 						processData: false,
 						contentType: false,
 						dataType: 'json'
@@ -224,17 +247,58 @@ var QR = body.append("div").on("click", function () {
 								break;
 								
 						}
-						/*request
-						  .post("/paint")
-						  .send({name: name, text: text})
-						  .end(function(err, res){
-							console.log(res.body);
-						  });*/
+						
 						
 					});
 					return false;
 				});
-			});
+			});*/
+			
+			QRmain.append("canvas").style({
+				display:"none",
+			})
+			var captureForm = document.querySelector('#file'),
+			canvas = document.querySelector('canvas'),
+			ctx = canvas.getContext('2d');
+			canvas.width = canvas.height = 0;
+			
+			captureForm.addEventListener('change', function() {
+			var file = this.files[0],
+				image = new Image(),
+				reader = new FileReader(),
+				size = 500;
+			if (file.type.match(/image.*/)) {
+			  	reader.onloadend = function() {
+					image.onload = function() { // 画像が読み込めた時の処理
+						ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+						var w = size, h = image.height * (size/image.width);
+
+						console.log("元々のサイズ:" + image.width + "×" + image.height);
+						console.log("縮小後のサイズ:" + w + "×" + h);
+
+						canvas.width = w;
+						canvas.height = h;
+						ctx.drawImage(image, 0, 0, w, h);
+
+						// 縮小画像を表示
+						/*var img = document.createElement('img');
+						img.src = canvas.toDataURL();
+						document.querySelector('body').appendChild(img);*/
+						/*QRmain.append("img").attr({
+							src:function(){return canvas.toDataURL();},
+								  "z-index":0,
+						});*/
+
+						//サーバへbase64をPOSTするためメモ。
+						memo64 = canvas.toDataURL();	
+					}
+				image.src = reader.result;
+			  }
+			  reader.readAsDataURL(file);
+			}
+			}, false);
+			
 			//ここで行われる流れ
 			
 			//とったQR画像をサーバーに送って解析データ（テキスト）をもらう
@@ -372,7 +436,7 @@ var item = body.append("div").on("click",function(){
 							position:"absolute",
 							height:"40px",
 							width:"15%",
-							"margin-top":function(){return 160+40*(i-2)},
+							"margin-top":function(){return 60+40*(i-2)},
 							"margin-left":"5%",
 							background:"gray",
 							"text-align":"center",
@@ -381,14 +445,32 @@ var item = body.append("div").on("click",function(){
 							id:i,
 						}).text(function(){return "F"+(i)});
 				}
-				var boadFitem = mapFitem.append("div").style({
+				boadFitem = mapFitem.append("div").style({
 					background:"white",
 					position:"absolute",
 					"margin-left":"19%",
-					"margin-top":"200px",
+					"margin-top":"100px",
 					width:"70%",
 					height:"200px",
 				});
+				mapFitem.select("div:nth-of-type("+(scopefloor-2)+")").style({
+					color:"black",
+					background:"white",
+				});
+				var itemTarget = 
+				
+				itemTargetSelect = true;
+				
+				boadFitemReset();
+			
+				itemmain.append("select").style({
+					position:"absolute",
+					"margin-top":"330px",
+					"margin-left":"45%",
+				}).selectAll("option").data(map.body).enter().append("option").text(function(d){
+					return "S"+d.id;
+				});
+				
 				
 				
 				switch(player.item[this.id]){

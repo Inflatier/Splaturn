@@ -6,6 +6,10 @@ var body = d3.select("body").style({
 	height:"100%",
 });
 
+var boadFitem;
+
+var itemTargetSelect = false;
+
 var mapdiv = body.append("div");
 
 var timep = body.append("p");
@@ -29,6 +33,10 @@ function redisplay(){
 	//マップ描画（スコープに応じたものを再描画）
 	
 	boadreset();
+	
+	if(itemTargetSelect){
+		boadFitemReset();
+	}
 	
 	
 }
@@ -150,6 +158,29 @@ function boadreset(){
 	boad.html(" ");
 	boad.html(mapsvg[scopefloor]);
 	var roomsFfill = boad.select("svg").select("g");
+	
+	for(var i=1;i<=8;i++){
+		var idpre = "" + scopefloor + i  ;
+		var judgeRoomColor = map.body[(scopefloor-3)*8+i-1].color;
+		switch(judgeRoomColor){
+				case 1:
+					document.getElementById( idpre ).setAttribute('fill','white');
+					break;
+				case 2:
+					document.getElementById( idpre ).setAttribute('fill','red');
+					break;
+				case 3:
+					document.getElementById( idpre ).setAttribute('fill','blue');
+					break;
+		}
+	}
+}
+
+//アイテム対象選択用map描画更新
+function boadFitemReset(){
+	boadFitem.html(" ");
+	boadFitem.html(mapsvg[scopefloor]);
+	var roomsFfill = boadFitem.select("svg").select("g");
 	
 	for(var i=1;i<=8;i++){
 		var idpre = "" + scopefloor + i  ;
