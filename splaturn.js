@@ -3,6 +3,7 @@ var express = require('express');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var request = require('request');
 
 
 
@@ -104,11 +105,25 @@ app.get('/', function index(req, res) {
 	else res.redirect('/entry');
 });
 
-app.use('/qr', proxy('api.qrserver.com', {
-  forwardPath: function(req, res) {
-	  return '/v1/read-qr-code/';
+app.post('/qr', function (req, res) {
+  var importFile = function(fileBase64Encoded, cb) {
+    var decodedFile = new Buffer(fileBase64Encoded, 'base64');
+    var r = request.post('http://api.qrserver.com/v1/read-qr-code/', function (err, httpResponse, body) {
+        if (err) cb(err);
+        else cb(null, body);
+    });
+    var form = r.form();
+    form.append('file', decodedFile, { filename: 'temp.png' });
+  };
+  
+  if (req.body) {
+    importFile(req.body, function (err, body) {
+      res.end(body);
+    });
+  } else {
+    res.end(null);
   }
-}));
+});
 
 app.use('/control', control);
 
@@ -117,4 +132,4 @@ app.use(express.static(__dirname + '/public'));
 
 
 // 接続を受け付ける
-app.listen(14514);
+app.listen(process.env.PORT || 14514);

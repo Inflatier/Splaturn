@@ -59,7 +59,7 @@ function Endpoints(instance) {
 
 function respondJSON(res, json) {
 	res.writeHead(200, {'Content-Type': 'application/json;charset=utf-8'});
-	res.write(json.toString());
+	res.write(json);
 	res.end();
 }
 
