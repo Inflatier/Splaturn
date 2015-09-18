@@ -39,10 +39,7 @@ var rule = body.append("div").on("click",function(){
         var rulemain = body.append("div").style({
             background:"skyblue",
             position:"absolute",
-            "margin-left": "0%",
-            "margin-top": "0%",
-            width: "100%",
-            height: "170%",
+            "left": "1%",
             "z-index": 100,
             opacity: 0,
             "border-radius":"20px",
@@ -60,7 +57,7 @@ var rule = body.append("div").on("click",function(){
                 rulemain.remove();
             },300);
         }).style({
-            position:"absolute",
+            position:"static",
             "margin-top":"5%",
             "margin-left":"5%",
             width:"40",
@@ -80,14 +77,14 @@ var rule = body.append("div").on("click",function(){
 				rulemain.remove();
 			},1000);
 		}).style({
-			position: "absolute",
-			"margin-top": "20%",
+			position: "static",
+			"margin-top": "10%",
 			"margin-left": "10%",
 			"margin-right": "10%",
 			"margin-bottom": "5%",
 			"font-size": 25,
 			color: "white"
-		}).html('このゲームは2〜4チームに分かれて<ruby><rb>校内</rb><rp>（</rp><rt>こうない</rt><rp>）</rp></ruby>の<ruby><rb>部屋</rb><rp>（</rp><rt>へや</rt><rp>）</rp></ruby>をチームでとっていく<ruby><rb>陣取</rb><rp>（</rp><rt>じんと</rt><rp>）</rp></ruby>りゲームです。<br><br><ruby><rb>各部屋</rb><rp>（</rp><rt>かくへや</rt><rp>）</rp></ruby>にある<ruby><rb>QR</rb><rp>（</rp><rt>キューアール</rt><rp>）</rp></ruby>コードを<ruby><rb>使</rb><rp>（</rp><rt>つか</rt><rp>）</rp></ruby>ってその<ruby><rb>部屋</rb><rp>（</rp><rt>へや</rt><rp>）</rp></ruby>をとっていきます。<img src="qrwhite.png" width="100%" height="40%"><br>また、<ruby><rb>部屋</rb><rp>（</rp><rt>へや</rt><rp>）</rp></ruby>をとったときアイテムを<ruby><rb>入手</rb><rp>（</rp><rt>にゅうしゅ</rt><rp>）</rp></ruby>することができます。うまく<ruby><rb>使用</rb><rp>（</rp><rt>しよう</rt><rp>）</rp></ruby>すると<ruby><rb>逆転</rb><rp>（</rp><rt>ぎゃくてん</rt><rp>）</rp></ruby>することも<ruby><rb>可能</rb><rp>（</rp><rt>かのう</rt><rp>）</rp></ruby>です。<br>説明は以上です。');
+		}).html('このゲームは2チームに分かれて<ruby><rb>校内</rb><rp>（</rp><rt>こうない</rt><rp>）</rp></ruby>の<ruby><rb>部屋</rb><rp>（</rp><rt>へや</rt><rp>）</rp></ruby>をチームでとっていく<ruby><rb>陣取</rb><rp>（</rp><rt>じんと</rt><rp>）</rp></ruby>りゲームです。<br><br><ruby><rb>各部屋</rb><rp>（</rp><rt>かくへや</rt><rp>）</rp></ruby>にある<ruby><rb>QR</rb><rp>（</rp><rt>キューアール</rt><rp>）</rp></ruby>コードを<ruby><rb>使</rb><rp>（</rp><rt>つか</rt><rp>）</rp></ruby>ってその<ruby><rb>部屋</rb><rp>（</rp><rt>へや</rt><rp>）</rp></ruby>をとっていきます。<img src="qrwhite.png" width="100%" height="40%"><br>また、いくつかの<ruby><rb>部屋</rb><rp>（</rp><rt>へや</rt><rp>）</rp></ruby>にはアイテムが<ruby><rb>隠</rb><rt>かく</rt></ruby>されており、そのQRコードを<ruby><rb>読</rb><rt>よ</rt></ruby>み<ruby><rb>込</rb><rt>こ</rt></ruby>むことでアイテムを<ruby><rb>入手</rb><rp>（</rp><rt>にゅうしゅ</rt><rp>）</rp></ruby>することができます。うまく<ruby><rb>使用</rb><rp>（</rp><rt>しよう</rt><rp>）</rp></ruby>すると<ruby><rb>逆転</rb><rp>（</rp><rt>ぎゃくてん</rt><rp>）</rp></ruby>することも<ruby><rb>可能</rb><rp>（</rp><rt>かのう</rt><rp>）</rp></ruby>です。');
 
     },300);
 
@@ -99,7 +96,17 @@ var rule = body.append("div").on("click",function(){
 	"box-shadow": "2px 2px 8px -3px hsla(0, 0%, 0%, .26)"
 }).text("ルール");
 
-var QR = body.append("div").on("click", function () {
+var QR = body.append("div")
+	.style(temp)
+	.style({
+		color:"white",
+		background:"hsl(46, 98%, 60%)",
+		"margin-left":"35%",
+		"margin-top":"2%",
+		"box-shadow": "2px 2px 8px -3px hsla(0, 0%, 0%, .26)"
+	})
+	.text("QR")
+	.on("click", function () {
 
 		var memo64;
         QR.transition().duration(300).style({
@@ -336,13 +343,7 @@ var QR = body.append("div").on("click", function () {
 			//部屋なら、そのIDをサーバーに送信する
 			//アイテムならそれに対応したアイテムを手持ちに追加する
     },300);
-}).style(temp).style({
-	color:"white",
-	background:"hsl(46, 98%, 60%)",
-	"margin-left":"35%",
-	"margin-top":"2%",
-	"box-shadow": "2px 2px 8px -3px hsla(0, 0%, 0%, .26)"
-}).text("QR");
+});
 
 var item = body.append("div").on("click",function(){
 
@@ -361,8 +362,7 @@ var item = body.append("div").on("click",function(){
         var itemmain = body.append("div").style({
             background:"pink",
             position:"absolute",
-            "margin-left": "0%",
-            "margin-top": "0%",
+			left: "1%",
             width: "100%",
             height: "100%",
             "z-index": 100,
@@ -396,12 +396,11 @@ var item = body.append("div").on("click",function(){
 
         var list = itemmain.append("div").style({
             position:"absolute",
-            "margin-top":"20%",
-            "margin-left":"20%",
-            width:"60%",
-            height:"380",
-            background: "white",
+            "margin-top":"30%",
+            "margin-left":"10%",
+            width:"80%",
 			"border-radius": "5",
+			"line-height": "90px"
         });
         // for(var i=0;i<player.item.length;i++){
 		// 	list.append('img').attr({
@@ -422,7 +421,11 @@ var item = body.append("div").on("click",function(){
         // };
 
 		for(var i=0;i<player.item.length;i++){
-			list.append('img').attr({
+			list.append('img')
+			.style({
+				'border-radius': '7px'
+			})
+			.attr({
 					'src'   : function(){return player.item[i] + '.png';},
 					'width' : 50,
 					'height': 50,
@@ -560,6 +563,8 @@ var item = body.append("div").on("click",function(){
 				display: "inline",
 				"margin-left": "5",
 				"font-size": "30",
+				position: 'relative',
+				top: '-10px',
 				width:"100%",
 
                 // "margin-top": "5%",
