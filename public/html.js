@@ -93,9 +93,10 @@ var rule = body.append("div").on("click",function(){
 
 }).style(temp).style({
 	color:"white",
-	background:"skyblue",
+	background:"hsl(197, 100%, 63%)",
 	"margin-left":"2.5%",
 	"margin-top":"2%",
+	"box-shadow": "2px 2px 8px -3px hsla(0, 0%, 0%, .26)"
 }).text("ルール");
 
 var QR = body.append("div").on("click", function () {
@@ -337,9 +338,10 @@ var QR = body.append("div").on("click", function () {
     },300);
 }).style(temp).style({
 	color:"white",
-	background:"orange",
+	background:"hsl(46, 98%, 60%)",
 	"margin-left":"35%",
 	"margin-top":"2%",
+	"box-shadow": "2px 2px 8px -3px hsla(0, 0%, 0%, .26)"
 }).text("QR");
 
 var item = body.append("div").on("click",function(){
@@ -448,6 +450,7 @@ var item = body.append("div").on("click",function(){
 							color:"black",
 							background:"white",
 						});
+						boadFitemReset();
 
 						//boadFitem.append("div").html(mapsvg[i]);
 						/*selectAll("div").data(map[i]).enter().append("div").style({
@@ -574,8 +577,9 @@ var item = body.append("div").on("click",function(){
 
 }).style(temp).style({
 	color:"white",
-	background:"pink",
+	background:"rgb(253, 136, 156)",
 	"font-size": "150%",
 	"margin-left":"67.5%",
 	"margin-top":"2%",
+	"box-shadow": "2px 2px 8px -3px hsla(0, 0%, 0%, .26)"
 }).text("アイテム");
