@@ -13,6 +13,13 @@ var mapdiv = body.append("div");
 
 var timep = body.append("p");
 
+var broadcastMessages = body.append("div").style({
+	"position": "absolute",
+	"top": "415px",
+	"height": "160px",
+	"overflow": "scroll"
+});
+
 var scopefloor = 3;
 
 function tick() {
@@ -265,19 +272,19 @@ setInterval(function () {
 					break;
 					
 					case Events.painted:
-						message(mes);
+						broadcastMessage(mes);
 					break;
 					
 					case Events.locked:
-						message(mes);
+						broadcastMessage(mes);
 					break;
 					
 					case Events.unpeinted:
-						message(mes);
+						broadcastMessage(mes);
 					break;
 					
 					case Events.trapped:
-						message(mes);
+						broadcastMessage(mes);
 					break;
 					
 					default:

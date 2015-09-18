@@ -92,7 +92,6 @@ var labelForButtonDesign = QR.append('label')
 	.style({
 			display:"block",
 			position: "absolute",
-			//"font-size": "15",
 			"text-align": "center",
 			"font-size":"30px",
 			width:"30%",
