@@ -1,25 +1,4 @@
 
-
-/*
-GETのとき
-request
-  .get(url)
-  .end(function(err, res){
-    console.log(res.text);//レスポンス
-    //レスポンスがJSONの場合 
-    console.log(res.body);//ここにparse済みのオブジェクトが入る
-  });
-*/
-/*
-POSTのとき
-request
-  .post(url)
-  .send({name: name, text: text})
-  .end(function(err, res){
-    console.log(res.body);
-  });
-*/
-
 var temp = {
 				"font-size":"30px",
 				width:"30%",
@@ -96,254 +75,138 @@ var rule = body.append("div").on("click",function(){
 	"box-shadow": "2px 2px 8px -3px hsla(0, 0%, 0%, .26)"
 }).text("ルール");
 
-var QR = body.append("div")
-	.style(temp)
-	.style({
-		color:"white",
-		background:"hsl(46, 98%, 60%)",
-		"margin-left":"35%",
-		"margin-top":"2%",
-		"box-shadow": "2px 2px 8px -3px hsla(0, 0%, 0%, .26)"
-	})
-	.text("QR")
-	.on("click", function () {
-
-		var memo64;
-        QR.transition().duration(300).style({
-            opacity: 0,
-        });
-        setTimeout(function () {
-			var QRmain = body.append("div").style({
-				position:"absolute",
-				"margin-left": "0%",
-				"margin-top": "0%",
-				width: "100%",
-				height: "100%",
-				"z-index": 100000,
-				opacity: 0,
-				color: "white",
-				background: "orange",
-				"border-radius":"20px",
-			});
-			QRmain.transition().duration(300).ease('linear').style({
-				opacity: 1,
-			});
-			QRmain.append("p").style({
-				position: "absolute",
-				"margin-top": "15%",
-				"font-size": "30",
-				"text-align": "center",
-				width:"100%",
-			}).text("QRコードを撮る");
-			QRmain.append("div").on("click",function(){
-				QRmain.transition().duration(300).ease('linear').style({
-					opacity: 0,
-				});
-				QR.style({opacity:1,});
-				setTimeout(function (){
-					QRmain.remove();
-				},300);
-			}).style({
-				position:"absolute",
-				"margin-top":"5%",
-				"margin-left":"5%",
-				width:"40",
-				height:"30",
-				"text-align": "center",
-				"font-weight":"bold",
-				"font-size":30,
-			}).text("back");
-			
-			var form = QRmain.append("form").attr({
-				id: "foo",
-				onsubmit: "return false;",
-			});
-			form.append("input").attr({
-				type: "file",
-				name: "file",
-				accept: "image/*;capture=camera",
-				id:"file",
-			}).style({
-				display:"block",
-				position: "absolute",
-				// width: "80%",
-				//height: "20%",
-				"margin-top": "45%",
-				"margin-left": "10%",
-				"font-size": "15",
-				"text-align": "center",
-				width: "100%",
-				// background: "rgb(255, 238, 80)",
-				// "border-radius": "20%",
-			});
-			var formsubmit = form.append("input").on("click",function(){
-				formsubmit.style({
-					"margin-top":"200%",
-				});
-				
-				console.log(memo64);
-					
-					request
-					  .post("/qr")
-					  .type('form')
-					  .send({'data': memo64})
-					  .end(function(err, res){
-						if (!res.body) {
-							// APIのエラー
-							console.log(res);
-							message('[失敗] もう一度読み込んでみてください。')
-						} else if (res.body[0].symbol[0].data == null) {
-							// QRうまく読み込めなかった
-							console.log(res.body[0].symbol[0].error);
-							message('[失敗] もう一度読み込んでみてください。');
-						} else {
-						  // QRの部屋を塗る
-						  console.log(res.body[0].symbol[0].data);
-						  var param = res.body[0].symbol[0].data.substring(1);
-						
-						switch(res.body[0].symbol[0].data[0]){	
-							case "S":
-								request
-									.post("/paint")
-									.type('form')
-									.send({"roomid": param})
-									.end(function(err1, res1){
-										console.log(res1.body);
-										message(res1.body.message);
-									});
-							break;
-							
-							case "I":
-								request
-									.post("/getitem")
-									.type('form')
-									.send({"itemname": param})
-									.end(function(err1, res1){
-										console.log(res1.body);
-										message(res1.body.message);
-									});	
-							break;
-							
-							case "N":
-								message('残念、ハズレのQRコードだ!');
-							break;
-						}
-						  
-						}
-				
-					  });
-			}).attr({
-				id: "send",
-				type: "submit",
-			}).style({
-				display: "block",
-				width: "30%",
-				height: "15%",
-				position: "absolute",
-				"margin-top": "55%",
-				"margin-left": "35%",
-				background: "rgb(255, 238, 80)",
-				"border-radius": "20%",
-			});
-			
-			/*
-			$(function () {
-				$('#foo').submit(function () {
-					console.log("ok");
-					var fd = new FormData($('#foo').get()[0]);
-					$.ajax({
-						url: "qr",
-						method: "POST",
-						data: ,
-						processData: false,
-						contentType: false,
-						dataType: 'json'
-					})
-					.done(function (data) {
-						//サーバーに送る。
-						console.log(data[0].symbol[0].data);
-						
-						switch(data[0].symbol[0].data[0]){
-								
-							case "S":
-								var id = data[0].symbol[0].data.substring(1);
-								request
-								  .post("/paint")
-								  .type('form')
-								  .send({"roomid": id})
-								  .end(function(err, res){
-									console.log(res.body);
-									message(res.body.message);
-								  });
-								break;
-							case "I":
-								break;
-							case "N":
-								break;
-								
-						}
-						
-						
-					});
-					return false;
-				});
-			});*/
-			
-			QRmain.append("canvas").style({
-				display: "none",
-			})
-			var captureForm = document.querySelector('#file'),
-			canvas = document.querySelector('canvas'),
-			ctx = canvas.getContext('2d');
-			canvas.width = canvas.height = 0;
-			
-			captureForm.addEventListener('change', function() {
-			var file = this.files[0],
-				image = new Image(),
-				reader = new FileReader(),
-				size = 500;
-			if (file.type.match(/image.*/)) {
-			  	reader.onloadend = function() {
-					image.onload = function() { // 画像が読み込めた時の処理
-						ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-						var w = size, h = image.height * (size/image.width);
-
-						console.log("元々のサイズ:" + image.width + "×" + image.height);
-						console.log("縮小後のサイズ:" + w + "×" + h);
-
-						canvas.width = w;
-						canvas.height = h;
-						ctx.drawImage(image, 0, 0, w, h);
-
-						// 縮小画像を表示
-						/*var img = document.createElement('img');
-						img.src = canvas.toDataURL();
-						document.querySelector('body').appendChild(img);*/
-						/*QRmain.append("img").attr({
-							src:function(){return canvas.toDataURL();},
-								  "z-index":0,
-						});*/
-
-						//サーバへbase64をPOSTするためメモ。
-						
-						memo64 = canvas.toDataURL();
-						memo64 = memo64.split(',')[1];
-					}
-				image.src = reader.result;
-			  }
-			  reader.readAsDataURL(file);
-			}
-			}, false);
-			
-			//ここで行われる流れ
-			
-			//とったQR画像をサーバーに送って解析データ（テキスト）をもらう
-			//もらったデータが部屋のIDかアイテムのIDかを判別する
-			//部屋なら、そのIDをサーバーに送信する
-			//アイテムならそれに対応したアイテムを手持ちに追加する
-    },300);
+var QR = body.append("form").attr({
+		id: "foo",
+		onsubmit: "return false;",
+	});
+	
+QR.append("canvas").style({
+	display: "none"
 });
+
+var labelForButtonDesign = QR.append('label')
+	.attr({
+		'for': 'file'
+	})
+	.text('QR')
+	.style({
+			display:"block",
+			position: "absolute",
+			//"font-size": "15",
+			"text-align": "center",
+			"font-size":"30px",
+			width:"30%",
+			height:"50px",
+			"border-radius":"20px",
+			"line-height":"50px",
+			color:"white",
+			background:"hsl(46, 98%, 60%)",
+			"margin-left":"35%",
+			"margin-top":"2%",
+			"box-shadow": "2px 2px 8px -3px hsla(0, 0%, 0%, .26)"
+		});
+
+var memo64;
+var formsubmit = labelForButtonDesign.append("input")
+		.attr({
+			type: "file",
+			name: "file",
+			accept: "image/*;capture=camera",
+			id:"file",
+		})
+		.style({
+			'visibility': 'hidden'
+		});
+		
+(function () {
+	var captureForm = document.querySelector('#file'),
+	canvas = document.querySelector('canvas'),
+	ctx = canvas.getContext('2d');
+	canvas.width = canvas.height = 0;
+	
+	captureForm.addEventListener('change', function() {
+		var file = this.files[0],
+			image = new Image(),
+			reader = new FileReader(),
+			size = 500;
+		if (file.type.match(/image.*/)) {
+			reader.onloadend = function() {
+				image.onload = function() { // 画像が読み込めた時の処理
+					ctx.clearRect(0, 0, canvas.width, canvas.height);
+		
+					var w = size, h = image.height * (size/image.width);
+		
+					console.log("元々のサイズ:" + image.width + "×" + image.height);
+					console.log("縮小後のサイズ:" + w + "×" + h);
+		
+					canvas.width = w;
+					canvas.height = h;
+					ctx.drawImage(image, 0, 0, w, h);
+					
+					memo64 = canvas.toDataURL();
+					memo64 = memo64.split(',')[1];
+					
+					postQRCode();
+				}
+				image.src = reader.result;
+			}
+			reader.readAsDataURL(file);
+		}
+	}, false);
+	
+	function postQRCode() {
+		console.log(memo64);
+				
+		request
+			.post("/qr")
+			.type('form')
+			.send({'data': memo64})
+			.end(function(err, res){
+				if (!res.body) {
+					// APIのエラー
+					console.log(res);
+					message('[失敗] もう一度読み込んでみてください。')
+				} else if (res.body[0].symbol[0].data == null) {
+					// QRうまく読み込めなかった
+					console.log(res.body[0].symbol[0].error);
+					message('[失敗] もう一度読み込んでみてください。');
+				} else {
+					// QRの部屋を塗る
+					console.log(res.body[0].symbol[0].data);
+					var param = res.body[0].symbol[0].data.substring(1);
+				
+					switch(res.body[0].symbol[0].data[0]){	
+						case "S":
+							request
+								.post("/paint")
+								.type('form')
+								.send({"roomid": param})
+								.end(function(err1, res1){
+									console.log(res1.body);
+									message(res1.body.message);
+								});
+						break;
+						
+						case "I":
+							request
+								.post("/getitem")
+								.type('form')
+								.send({"itemname": param})
+								.end(function(err1, res1){
+									console.log(res1.body);
+									message(res1.body.message);
+								});	
+						break;
+						
+						case "N":
+							message('残念、ハズレのQRコードだ!');
+						break;
+					}	
+				}
+			});
+	}
+	
+})();
 
 var item = body.append("div").on("click",function(){
 
@@ -402,23 +265,6 @@ var item = body.append("div").on("click",function(){
 			"border-radius": "5",
 			"line-height": "90px"
         });
-        // for(var i=0;i<player.item.length;i++){
-		// 	list.append('img').attr({
-        //             'src'   : function(){return player.item[i] + '.png';},
-        //             'width' : 50,
-        //             'height': 50,
-		// 		});
-        //     list.append("p").style({
-		// 		display: "inline",
-		// 		"margin-left": "5",
-        //         "font-size": "30",
-        //         width:"100%",
-		// 		//position: "absolute",
-        //         //"margin-top": ,
-		// 		//"line-height": "30",
-        //         //"text-align": "center",
-        //     }).text(player.item[i]);
-        // };
 
 		for(var i=0;i<player.item.length;i++){
 			list.append('img')
@@ -455,23 +301,6 @@ var item = body.append("div").on("click",function(){
 						});
 						boadFitemReset();
 
-						//boadFitem.append("div").html(mapsvg[i]);
-						/*selectAll("div").data(map[i]).enter().append("div").style({
-							position:"absolute",
-							"margin-left":function(e,n){return 10+n%3*90+"px";},
-							"margin-top":function(e,n){return 7+Math.floor(n/3)*87+"px";},
-							width:"80px",
-							height:"80px",
-							border: "2px solid black",
-							background:function(e,n){return e.color;},
-							"text-align":"center",
-							"line-height":"80px",
-							color:function(e,n){
-								if(e.color=='')return "black";
-							},
-						}).text(function(e,n){
-							return e.name;
-						});*/
 
 						}).style({
 							color:"white",
@@ -500,21 +329,29 @@ var item = body.append("div").on("click",function(){
 					color:"black",
 					background:"white",
 				});
-				var itemTarget ;
+				
+				// 苦肉の策
+				var itemTarget = "38";
 				
 				itemTargetSelect = true;
 				
 				boadFitemReset();
-			
-				itemmain.append("select").on("change",function(){
+				
+				
+				itemmain.append("select").on("change", function () {
 					itemTarget = this.options[this.selectedIndex].text.substring(1);
-				}).style({
+				})
+				.on('load', function () {
+					itemTarget = this.options[this.selectedIndex].text.substring(1);
+				})
+				.style({
 					position:"absolute",
 					"margin-top":"330px",
 					"margin-left":"45%",
 				}).selectAll("option").data(map.body).enter().append("option").text(function(d){
 					return "S"+d.id;
 				});
+				
 				var tmpFitem = this.id;
 				itemmain.append("button").on("click",function(){
 					console.log(itemTarget);
@@ -565,19 +402,14 @@ var item = body.append("div").on("click",function(){
 				"font-size": "30",
 				position: 'relative',
 				top: '-10px',
-				width:"100%",
-
-                // "margin-top": "5%",
-                // "font-size": "30",
-                // "text-align": "center",
-                // width:"100%",
+				width:"100%"
             }).attr({
 				id:i,
 			}).text(player.item[i]);
 
 			list.append('br');
         };
-
+		
     },300);
 
 }).style(temp).style({
