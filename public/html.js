@@ -291,7 +291,8 @@ var QR = body.append("div").on("click", function () {
 						});*/
 
 						//サーバへbase64をPOSTするためメモ。
-						memo64 = canvas.toDataURL();	
+						memo64 = canvas.toDataURL();
+						memo64 = memo64.split(',')[1];
 					}
 				image.src = reader.result;
 			  }
@@ -318,6 +319,14 @@ var item = body.append("div").on("click",function(){
     item.transition().duration(300).style({
         opacity: 0,
     });
+	request
+	  .get("/myitems")
+	  .end(function(err, res){
+		console.log(res.text);//レスポンス
+		//レスポンスがJSONの場合 
+		console.log(res.body);//ここにparse済みのオブジェクトが入る
+		player.item=res.body;
+	  });
     setTimeout(function () {
         var itemmain = body.append("div").style({
             background:"pink",
@@ -457,43 +466,64 @@ var item = body.append("div").on("click",function(){
 					color:"black",
 					background:"white",
 				});
-				var itemTarget = 
+				var itemTarget ;
 				
 				itemTargetSelect = true;
 				
 				boadFitemReset();
 			
-				itemmain.append("select").style({
+				itemmain.append("select").on("change",function(){
+					itemTarget = this.options[this.selectedIndex].text.substring(1);
+				}).style({
 					position:"absolute",
 					"margin-top":"330px",
 					"margin-left":"45%",
 				}).selectAll("option").data(map.body).enter().append("option").text(function(d){
 					return "S"+d.id;
 				});
-				
-				
-				
-				switch(player.item[this.id]){
-					case '部屋ロック':
-						
-						break;
-					case '色消し':
-						
-						break;
-					case 'トラップ':
-						
-						//対象選択用のマップを作る
-						
-						
-						//ここでサーバーにplayer.item[this.id]と部屋IDを送信
-						
-						player.item[this.id]="無し";
-						break;
-						
-					case '無し':
-						
-						break;
-				}
+				var tmpFitem = this.id;
+				itemmain.append("button").on("click",function(){
+					console.log(itemTarget);
+					switch(player.item[tmpFitem]){
+						case '部屋ロック':
+							request
+							  .post("/locker")
+							  .type('form')
+							  .send({roomid:itemTarget})
+							  .end(function(err, res){
+								console.log(res.body);
+								message(res.body.message);
+							  });
+							break;
+						case '色消し':
+							request
+							  .post("/nullPeinter")
+							  .type('form')
+							  .send({roomid:itemTarget})
+							  .end(function(err, res){
+								console.log(res.body);
+								message(res.body.message);
+							  });
+							break;
+						case 'トラップ':
+							request
+							  .post("/trap")
+							  .type('form')
+							  .send({roomid:itemTarget})
+							  .end(function(err, res){
+								console.log(res.body);
+								message(res.body.message);
+							  });
+
+							//ここでサーバーにplayer.item[this.id]と部屋IDを送信
+
+							break;
+					}
+				}).style({
+					position:"absolute",
+					"margin-top":"350px",
+					"margin-left":"45%",
+				}).text("決定");
 				
 			}).style({
 				display: "inline",
