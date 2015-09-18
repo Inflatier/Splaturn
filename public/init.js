@@ -206,9 +206,9 @@ function boadFitemReset(){
 // マップの更新
 function updateMapdata() {
 	request.get('/rooms').end(function (err, res) {
-		map = res.body;
+		map = res;
+		boadreset();
 	});
-	boadFitemReset();
 }
 
 //data更新
@@ -260,7 +260,7 @@ setInterval(function () {
 	request
   		.get("/left")
   		.end(function(err, res){
-			lefttime = res.body/1000;
+			lefttime = res.body / 1000;
 			tick();
 		});
 	
