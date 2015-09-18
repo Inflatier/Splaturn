@@ -23,6 +23,7 @@ function tick() {
 		color:"hsl(0, 0%, 43%)",
 		"font-size":"30px",
 		position:"absolute",
+		"left": "0",
 		"margin-top":"140px",
 		"text-align": "center",
 	}).text(function(){
@@ -62,6 +63,7 @@ request
 	body.append("p").style({
 		position: "absolute",
 		"margin-top": "70px",
+		"left": "0",
 		"text-align": "center",
 		width: "100%",
 		color: function() {
