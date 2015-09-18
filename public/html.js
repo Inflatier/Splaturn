@@ -513,7 +513,7 @@ var item = body.append("div").on("click",function(){
 				itemmain.append("button").on("click",function(){
 					console.log(itemTarget);
 					switch(player.item[tmpFitem]){
-						case '部屋ロック':
+						case 'locker':
 							request
 							  .post("/locker")
 							  .type('form')
@@ -523,7 +523,7 @@ var item = body.append("div").on("click",function(){
 								message(res.body.message);
 							  });
 							break;
-						case '色消し':
+						case 'nullPeinter':
 							request
 							  .post("/nullPeinter")
 							  .type('form')
@@ -533,7 +533,7 @@ var item = body.append("div").on("click",function(){
 								message(res.body.message);
 							  });
 							break;
-						case 'トラップ':
+						case 'trap':
 							request
 							  .post("/trap")
 							  .type('form')
