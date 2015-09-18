@@ -27,8 +27,10 @@ app.use(session({
 	}
 }));
 
+
 // POSTで受け取ったデータにreq.body.XXXでアクセスできるようになるモジュール
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+app.use(bodyParser.json({limit: '50mb'}));
 
 
 
@@ -116,9 +118,11 @@ app.post('/qr', function (req, res) {
     form.append('file', decodedFile, { filename: 'temp.png' });
   };
   
-  if (req.body) {
-    importFile(req.body, function (err, body) {
-      res.end(body);
+  if (req.body.data) {
+    importFile(req.body.data, function (err, body) {
+      res.writeHead(200, {'Content-Type': 'application/json;charset=utf-8'});
+	    res.write(body);
+	    res.end();
     });
   } else {
     res.end(null);

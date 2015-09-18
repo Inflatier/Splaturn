@@ -150,11 +150,13 @@ var QR = body.append("div").on("click", function () {
 				id: "foo",
 				onsubmit: "return false;",
 			});
+			/*
 			form.append("input").attr({
 				type: "hidden",
 				name: "MAX_FILE_SIZE",
 				value: "1048576"
 			});
+			*/
 			form.append("input").attr({
 				type: "file",
 				name: "file",
@@ -183,18 +185,50 @@ var QR = body.append("div").on("click", function () {
 					request
 					  .post("/qr")
 					  .type('form')
-					  .send(memo64)
+					  .send({'data': memo64})
 					  .end(function(err, res){
-						console.log(res.body);
-					
-						request
-						  .post("/paint")
-						  .type('form')
-						  .send({"roomid": res.body})
-						  .end(function(err, res){
-							console.log(res.body);
-							message(res.body.message);
-						  });
+						if (!res.body) {
+							// APIのエラー
+							console.log(res);
+							message('[失敗] もう一度読み込んでみてください。')
+						} else if (res.body[0].symbol[0].data == null) {
+							// QRうまく読み込めなかった
+							console.log(res.body[0].symbol[0].error);
+							message('[失敗] もう一度読み込んでみてください。');
+						} else {
+						  // QRの部屋を塗る
+						  console.log(res.body[0].symbol[0].data);
+						  var param = res.body[0].symbol[0].data.substring(1);
+						
+						switch(res.body[0].symbol[0].data[0]){	
+							case "S":
+								request
+									.post("/paint")
+									.type('form')
+									.send({"roomid": param})
+									.end(function(err1, res1){
+										console.log(res1.body);
+										message(res1.body.message);
+									});
+							break;
+							
+							case "I":
+								request
+									.post("/getitem")
+									.type('form')
+									.send({"itemname": param})
+									.end(function(err1, res1){
+										console.log(res1.body);
+										message(res1.body.message);
+									});	
+							break;
+							
+							case "N":
+								message('残念、ハズレのQRコードだ!');
+							break;
+						}
+						  
+						}
 				
 					  });
 			}).attr({
@@ -255,7 +289,7 @@ var QR = body.append("div").on("click", function () {
 			});*/
 			
 			QRmain.append("canvas").style({
-				display:"none",
+				display: "none",
 			})
 			var captureForm = document.querySelector('#file'),
 			canvas = document.querySelector('canvas'),
@@ -291,6 +325,7 @@ var QR = body.append("div").on("click", function () {
 						});*/
 
 						//サーバへbase64をPOSTするためメモ。
+						
 						memo64 = canvas.toDataURL();
 						memo64 = memo64.split(',')[1];
 					}

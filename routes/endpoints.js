@@ -134,6 +134,7 @@ function paint(req, res) {
 		util.broadcast(new Event(Events.painted, playerid, roomid, player.name + 'が' + room.name + 'を' + colorString + 'に塗り替えた!'));
 	}
 	respondJSON(res, JSON.stringify(result));
+	console.log(result);
 }
 
 function locker(req, res) {
@@ -142,6 +143,7 @@ function locker(req, res) {
 	var item = res.app.locals.items['locker'];
 	var result = item.use(parseInt(roomid), parseInt(playerid));
 	respondJSON(res, JSON.stringify(result));
+	console.log(result);
 }
 
 function nullPeinter(req, res) {
@@ -150,6 +152,7 @@ function nullPeinter(req, res) {
 	var item = res.app.locals.items['nullPeinter'];
 	var result = item.use(parseInt(roomid), parseInt(playerid));
 	respondJSON(res, JSON.stringify(result));
+	console.log(result);
 }
 
 function trap(req, res) {
@@ -158,6 +161,7 @@ function trap(req, res) {
 	var item = res.app.locals.items['trap'];
 	var result = item.use(parseInt(roomid), parseInt(playerid));
 	respondJSON(res, JSON.stringify(result));
+	console.log(result);
 }
 
 module.exports = Endpoints;

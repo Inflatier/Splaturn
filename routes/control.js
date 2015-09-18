@@ -81,7 +81,6 @@
 			}
 		});
 		
-		console.log(res.app.locals.left);
 		old = new Date().getTime();
 		
 	 }, 16);

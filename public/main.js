@@ -98,9 +98,9 @@ function message(text){
 		m2.transition().duration(500).style({
 			opacity:0,
 		});
-	},500)
+	},1500)
 	setTimeout(function(){
 		m1.remove();
 		m2.remove();
-	},1000)
+	},2000)
 }
