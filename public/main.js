@@ -104,3 +104,17 @@ function message(text){
 		m2.remove();
 	},2000)
 }
+
+function broadcastMessage(text) {
+	var m2 = broadcastMessages.append("div").style({
+		"background-color": "lightgreen",
+		"border-radius": "6px"
+	});
+	m2.append("p").style({
+		color:"white",
+		width:"100%",
+		"padding": "3px",
+		"margin": "3px auto",
+		"text-align": "center",
+	}).text(text);
+}
