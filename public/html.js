@@ -150,13 +150,6 @@ var QR = body.append("div").on("click", function () {
 				id: "foo",
 				onsubmit: "return false;",
 			});
-			/*
-			form.append("input").attr({
-				type: "hidden",
-				name: "MAX_FILE_SIZE",
-				value: "1048576"
-			});
-			*/
 			form.append("input").attr({
 				type: "file",
 				name: "file",

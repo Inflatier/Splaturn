@@ -47,6 +47,11 @@
 	 res.render('control');
  }
  
+ function initializeGame(req, res) {
+	 res.app.locals.initialize();
+	 res.end('NEW GAME HAS BEEN READY.');
+ } 
+ 
  function startGame(req, res) {
 	 if (res.app.locals.state == GameStatus.game_started) {
 		 res.end('THE GAME HAS ALREADY BEEN STARTED.');
@@ -121,5 +126,6 @@
  router.get('/', provideControl);
  router.get('/start', startGame);
  router.get('/stop', stopGame);
+ router.get('/initialize', initializeGame);
  
  module.exports = router;

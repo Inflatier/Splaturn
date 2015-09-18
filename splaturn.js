@@ -33,40 +33,11 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(bodyParser.json({limit: '50mb'}));
 
 
-
-
 // Colors列挙体
 var Colors = require('./modules/colors');
 
 // ゲームのステータス(エントリー待ち・ゲーム中・ゲーム終了)
 var GameStatus = require('./modules/gamestatus');
-
-
-// ゲームコンフィグ
-app.locals.config = require('./config.json');
-
-// ゲームが開始した時間
-app.locals.started = null;
-
-// ゲームの残り時間
-app.locals.left = app.locals.config.left;
-
-// ゲームの現在の状態
-app.locals.state = GameStatus.waiting_entry;
-
-// ゲームのタイマーのID
-app.locals.timerId = null;
-
-// 全部屋の配列
-app.locals.rooms = require('./modules/rooms');
-
-// アイテムの配列
-app.locals.items = require('./modules/items')(app);
-
-// プレイヤーの配列
-app.locals.players = [];
-
-
 
 // ゲームの参加・退出用エンドポイント
 var entry = require('./routes/entry');
@@ -77,11 +48,48 @@ var endpoints = require('./routes/endpoints')(app);
 // 管理用API
 var control = require('./routes/control');
 
+app.locals.initialize = function initialize() {  
+  // ゲームコンフィグ
+  app.locals.config = require('./config.json');
+  
+  // ゲームが開始した時間
+  app.locals.started = null;
+  
+  // ゲームの残り時間
+  app.locals.left = app.locals.config.left;
+  
+  // ゲームの現在の状態
+  app.locals.state = GameStatus.waiting_entry;
+  
+  // ゲームのタイマーのID
+  app.locals.timerId = null;
+  
+  // 全部屋の配列
+  app.locals.rooms = require('./modules/rooms');
+  
+  // アイテムの配列
+  app.locals.items = require('./modules/items')(app);
+  
+  // プレイヤーの配列
+  app.locals.players = [];
+  
+};
+
+app.locals.initialize();
+
 // APIのエンドポイントたち
 app.get('/entry', function (req, res) {
+  if (req.session.entried == true) {
+		res.redirect('/game');
+		return;
+	}
 	res.sendFile(__dirname + '/public/entry.html');
 });
 app.get('/game', function (req, res) {
+  if (req.session.entried != true) {
+		res.redirect('/entry');
+		return;
+	}
 	res.sendFile(__dirname + '/public/game.html');
 });
 app.post('/join', entry.join);

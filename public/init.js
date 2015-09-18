@@ -16,8 +16,7 @@ var timep = body.append("p");
 
 var scopefloor = 3;
 
-function redisplay(){
-	
+function tick() {
 	//時間描画
 	timep.style({
 		width: "100%",
@@ -29,6 +28,11 @@ function redisplay(){
 	}).text(function(){
 		return "（残り "+Math.floor(lefttime/60) + "分" + Math.floor(lefttime%60) + "秒）";
 	});
+}
+
+function redisplay(){
+	
+	tick();
 	
 	//マップ描画（スコープに応じたものを再描画）
 	
@@ -199,26 +203,66 @@ function boadFitemReset(){
 	}
 }
 
+// マップの更新
+function updateMapdata() {
+	request.get('/rooms').end(function (err, res) {
+		map = res.body;
+	});
+	boadFitemReset();
+}
+
 //data更新
-setInterval(function(){
+setInterval(function () {
 	
 	request
-  .get("/rooms")
-  .end(function(err, res){
-	
-	map=res;
-	
-  });
+		.get("/notifications")
+		.end(function(err, res) {
+			if (!err) var notifications = res.body;
+				
+			 for (var i = 0; i < notifications.length; i++) {
+				var notification = notifications[i];
+				if (i == notifications.length - 1) updateMapdata();
+								
+				var eventCode = notification.event;
+				var mes = notification.message;
+				
+				switch (eventCode) {
+					case Events.started:
+						message(mes);
+					break;
+					
+					case Events.finished:
+						message(mes);
+					break;
+					
+					case Events.painted:
+						message(mes);
+					break;
+					
+					case Events.locked:
+						message(mes);
+					break;
+					
+					case Events.unpeinted:
+						message(mes);
+					break;
+					
+					case Events.trapped:
+						message(mes);
+					break;
+					
+					default:
+					break; 
+				}
+			}
+		});
 	
 	request
-  .get("/left")
-  .end(function(err, res){
-	
-	lefttime = res.body/1000;
-	
-	redisplay();
-	
-  });
+  		.get("/left")
+  		.end(function(err, res){
+			lefttime = res.body/1000;
+			tick();
+		});
 	
 },1000);
 
