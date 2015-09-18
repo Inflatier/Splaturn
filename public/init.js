@@ -3,8 +3,7 @@ var request = window.superagent;
 var body = d3.select("body").style({
 	"background":"hsl(0, 0%, 91%)",
 	width:"100%",
-	height:"100%",
-});
+	height:"100%",}).append("div");
 
 var boadFitem;
 
@@ -219,6 +218,28 @@ function updateMapdata() {
 	});
 }
 
+function fingame(mes){
+	body.remove();
+	
+	d3.select("body").style({
+		"background-color":"gray",
+	}).append("div").style({
+		position:"absolute",
+		"background-color":"gray",
+		"margin-left":0,
+		"margin-top":0,
+		width:"100%",
+		height:"100%",
+		"z-index":100001,
+	}).append("p").style({
+		color:"white",
+		width:"100%",
+		"margin-top":"40%",
+		"text-align": "center",
+		"font-size":"40px",
+	}).html(mes+"<br/>最初の教室（情報教室１）に戻ってください。");
+}
+
 //data更新
 setInterval(function () {
 	
@@ -240,7 +261,7 @@ setInterval(function () {
 					break;
 					
 					case Events.finished:
-						message(mes);
+						fingame(mes);
 					break;
 					
 					case Events.painted:
@@ -273,7 +294,6 @@ setInterval(function () {
 		});
 	
 },1000);
-
 
 
 
