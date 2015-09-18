@@ -1,7 +1,7 @@
 var request = window.superagent;
 
 var body = d3.select("body").style({
-	"background":"black",
+	"background":"hsl(0, 0%, 91%)",
 	width:"100%",
 	height:"100%",
 });
@@ -20,7 +20,7 @@ function tick() {
 	//時間描画
 	timep.style({
 		width: "100%",
-		color:"white",
+		color:"hsl(0, 0%, 43%)",
 		"font-size":"30px",
 		position:"absolute",
 		"margin-top":"140px",
@@ -64,10 +64,16 @@ request
 		"margin-top": "70px",
 		"text-align": "center",
 		width: "100%",
-		color: function() { return player.color },
+		color: function() {
+			if (player.color == "red") return "hsl(0, 100%, 63%)"
+			else if (player.color == "blue") return "hsl(220, 100%, 63%)";
+		},
 		"font-size":"40px",
 	}).text(function(){
+		// 赤色
 		if (player.color == "red"){ return "赤チーム" };
+		
+		// 青色
 		if (player.color == "blue"){ return "青チーム" };
 	});
 	
