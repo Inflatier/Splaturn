@@ -244,28 +244,28 @@ var item = body.append("div").on("click",function(){
                 itemmain.remove();
             },300);
         }).style({
-            position:"absolute",
-            "margin-top":"5%",
-            "margin-left":"5%",
-            width:"40",
-            height:"30",
+            position: "absolute",
+            "margin-top": "5%",
+            "margin-left": "5%",
+            width: "40",
+            height: "30",
             "text-align": "center",
-            "font-weight":"bold",
-            "font-size":30,
+            "font-weight": "bold",
+            "font-size": 30,
         }).text("back");
 
 
 
         var list = itemmain.append("div").style({
-            position:"absolute",
-            "margin-top":"30%",
-            "margin-left":"10%",
-            width:"80%",
+            position: "absolute",
+            "margin-top": "30%",
+            "margin-left": "10%",
+            width: "80%",
 			"border-radius": "5",
 			"line-height": "90px"
         });
 
-		for(var i=0;i<player.item.length;i++){
+		for(var i = 0; i < player.item.length; i++){
 			list.append('img')
 			.style({
 				'border-radius': '7px'
@@ -352,9 +352,9 @@ var item = body.append("div").on("click",function(){
 				});
 				
 				var tmpFitem = this.id;
-				itemmain.append("button").on("click",function(){
+				itemmain.append("button").on("click", function(){
 					console.log(itemTarget);
-					switch(player.item[tmpFitem]){
+					switch ( player.item[tmpFitem] ){
 						case 'locker':
 							request
 							  .post("/locker")
@@ -364,7 +364,8 @@ var item = body.append("div").on("click",function(){
 								console.log(res.body);
 								message(res.body.message);
 							  });
-							break;
+						break;
+						
 						case 'nullPeinter':
 							request
 							  .post("/nullPeinter")
@@ -374,7 +375,8 @@ var item = body.append("div").on("click",function(){
 								console.log(res.body);
 								message(res.body.message);
 							  });
-							break;
+						break;
+						
 						case 'trap':
 							request
 							  .post("/trap")
@@ -384,11 +386,19 @@ var item = body.append("div").on("click",function(){
 								console.log(res.body);
 								message(res.body.message);
 							  });
-
-							//ここでサーバーにplayer.item[this.id]と部屋IDを送信
-
-							break;
+						break;	
 					}
+					
+					
+					itemmain.transition().duration(300).ease('linear').style({
+						opacity: 0,
+					});
+					item.style({opacity: 1});
+					setTimeout(function (){
+						itemmain.remove();
+					},300);
+					
+					
 				}).style({
 					position:"absolute",
 					"margin-top":"350px",
