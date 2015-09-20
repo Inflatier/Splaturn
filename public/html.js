@@ -423,9 +423,9 @@ var item = body.append("div").on("click",function(){
 
 }).style(temp).style({
 	color:"white",
-	background:"rgb(253, 136, 156)",
+	background:"gray",
 	"font-size": "150%",
 	"margin-left":"67.5%",
 	"margin-top":"2%",
 	"box-shadow": "2px 2px 8px -3px hsla(0, 0%, 0%, .26)"
-}).text("アイテム");
+}).html("<s style='color:black;'> <b style='color:white;'>アイテム</b> </s>");

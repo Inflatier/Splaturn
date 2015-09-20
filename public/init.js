@@ -22,6 +22,17 @@ var broadcastMessages = body.append("div").style({
 
 var scopefloor = 3;
 
+var me;
+	
+request
+  .get("/myname")
+  .end(function(err, res){
+
+	console.log(res);
+	me = res;
+
+  });
+
 function tick() {
 	//時間描画
 	timep.style({
@@ -226,25 +237,28 @@ function updateMapdata() {
 }
 
 function fingame(mes){
-	body.remove();
 	
-	d3.select("body").style({
-		"background-color":"gray",
-	}).append("div").style({
-		position:"absolute",
-		"background-color":"gray",
-		"margin-left":0,
-		"margin-top":0,
-		width:"100%",
-		height:"100%",
-		"z-index":100001,
-	}).append("p").style({
-		color:"white",
-		width:"100%",
-		"margin-top":"40%",
-		"text-align": "center",
-		"font-size":"40px",
-	}).html(mes+"<br/>最初の教室（情報教室１）に戻ってください。");
+	if(me!="masterFthisgame"){
+		body.remove();
+
+		d3.select("body").style({
+			"background-color":"gray",
+		}).append("div").style({
+			position:"absolute",
+			"background-color":"gray",
+			"margin-left":0,
+			"margin-top":0,
+			width:"100%",
+			height:"100%",
+			"z-index":100001,
+		}).append("p").style({
+			color:"white",
+			width:"100%",
+			"margin-top":"40%",
+			"text-align": "center",
+			"font-size":"40px",
+		}).html(mes+"<br/>最初の教室（情報教室１）に戻ってください。");
+	}
 }
 
 //data更新
@@ -297,6 +311,9 @@ setInterval(function () {
   		.get("/left")
   		.end(function(err, res){
 			lefttime = res.body / 1000;
+			if(lefttime==0){
+				fingame("終了です。");
+			}
 			tick();
 		});
 	
