@@ -116,4 +116,5 @@ function broadcastMessage(text) {
 		"margin": "3px auto",
 		"text-align": "center",
 	}).text(text);
+	broadcastMessages.scrollTop = broadcastMessages.scrollHeight;
 }

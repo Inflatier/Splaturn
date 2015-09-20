@@ -1,13 +1,71 @@
 <html>
 	<head>
 		<title>エントリーのテスト</title>
+		<style>
+			button, html, body {
+				margin: 0; padding: 0;
+			}
+			
+			body {
+				background: hsl(0, 0%, 91%);
+			}
+			
+			input {
+				display: block;
+				width: 96%;
+				height: 128px;
+				font-size: 72px;
+				margin: 90px auto 70px;
+			}
+			
+			button {
+				width: 66%;
+				padding-bottom: 66%;
+				border-radius: 50%;
+				margin-top: 40px;
+				margin-left: 20%;
+			}
+			
+			.red {
+				background: hsl(0, 100%, 63%);
+			}
+			
+			.blue {
+				background: hsl(220, 100%, 63%);
+			}
+		</style>
+		<script>
+			/**
+			* データをPOSTする
+			* @param String アクション
+			* @param Object POSTデータ連想配列
+			*/
+			function execPost(action, data) {
+				// フォームの生成
+				var form = document.createElement("form");
+				form.setAttribute("action", action);
+				form.setAttribute("method", "post");
+				form.style.display = "none";
+				document.body.appendChild(form);
+				// パラメタの設定
+				if (data !== undefined) {
+					for (var paramName in data) {
+						var input = document.createElement('input');
+						input.setAttribute('type', 'hidden');
+						input.setAttribute('name', paramName);
+						input.setAttribute('value', data[paramName]);
+						form.appendChild(input);
+					}
+				}
+				// submit
+				form.submit();
+			}
+		</script>
 	</head>
 	<body>
-		<form method="post" action="/join">
-			<input type="text" name="playername" placeholder="名前" />
-			<input type="radio" name="color" value="2" checked>赤
-			<input type="radio" name="color" value="3">青
-			<input type="submit"  value="エントリー" />
+			<input type="text" name="playername" placeholder="名前を入れてください" />
+			<button class="red" onclick="execPost('/join', {'playername': document.getElementsByName('playername')[0].value || '名無し', 'color': 2});"></button>
+			<button class="blue" onclick="execPost('/join', {'playername': document.getElementsByName('playername')[0].value || '名無し', 'color': 3});"></button>
 		</form>
 	</body>
 </html>
