@@ -168,7 +168,7 @@ var formsubmit = labelForButtonDesign.append("input")
 				} else if (res.body[0].symbol[0].data == null) {
 					// QRうまく読み込めなかった
 					console.log(res.body[0].symbol[0].error);
-					message('[失敗] もう一度読み込んでみてください。');
+					message('失敗: もう一度読み込んでみてください。');
 				} else {
 					// QRの部屋を塗る
 					console.log(res.body[0].symbol[0].data);
